@@ -1,0 +1,66 @@
+\documentclass[12pt,a4paper]{article}
+
+% ============================
+% PREAMBLE
+% ============================
+\input{preamble}
+
+% ============================
+% DOCUMENT INFORMATION
+% ============================
+\title{\textbf{Rigorous Mathematical Formalization\\of the \textbf{F5 Game} (KSZ Five-Five Card Model)}\\
+\large Complete Analysis with Proofs}
+\author{Guy M. Kaptue T. } 
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+% ============================
+% ABSTRACT
+% ============================
+\begin{abstract}
+This document presents a complete and rigorous mathematical formalization of the \textbf{KSZ Five-Five Card Model} (or \textbf{F5 Game}), a zero-sum card game characterized by a fixed five-card hand and exactly five game rounds. Through eight structured parts, we establish the axiomatic foundations of the game, prove its fundamental properties, analyze its algorithmic and probabilistic complexity, and provide application exercises. This version 4.0 integrates advanced dealing rules (dealer selection, direction of play, cutting) and immediate victory conditions, specifically via the "triple 7". This approach transforms a set of oral rules into a formally defined mathematical object, which can be analyzed and optimized, serving as a basis for computer implementation, automated officiating, and the development of artificial intelligence.
+\end{abstract}
+
+\noindent\textbf{Keywords:}
+card game theory; zero-sum games; sequential games; 
+probabilistic modeling; finite-state systems; Five-Five structure.
+
+
+\tableofcontents
+\newpage
+
+% ============================
+% CHAPTERS
+% ============================
+\input{chapters/00_introduction}
+\input{chapters/01_definition_context}      % Possible references: \cite{parlett1999oxford, von1944theory}
+\input{chapters/02_formal_definitions}     % Possible references: \cite{grimaldi2003discrete, ross2014first}
+\input{chapters/03_theorems_proofs}         % Possible references: \cite{grimaldi2003discrete, feller1968introduction}
+\input{chapters/04_structural_properties}  % Possible references: \cite{von1944theory, nash1950equilibrium, binmore2007playing}
+\input{chapters/05_probabilistic_analysis}  % Possible references: \cite{ross2014first, feller1968introduction, shannon1948mathematical}
+\input{chapters/06_balancing_analysis}      % Possible references: \cite{nash1950equilibrium, gini1912variabilita, shannon1948mathematical}
+\input{chapters/07_complexity_theorems}     % Possible references: \cite{cormen2009introduction, sipser2012introduction, fisher1934randomisation}
+\input{chapters/08_probability_laws}
+\input{chapters/09_exercises_applications}  % Possible references: \cite{ross2014first, grimaldi2003discrete, binmore2007playing}
+
+% ============================
+% CONCLUSION
+% ============================
+\input{chapters/conclusion} % Possible references: \cite{von1944theory, shannon1948mathematical, cormen2009introduction}
+
+% ============================
+% APPENDIX
+% ============================
+\appendix
+\input{chapters/10_appendix}
+
+% ============================
+% BIBLIOGRAPHY
+% ============================
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

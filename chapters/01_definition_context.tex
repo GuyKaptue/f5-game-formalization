@@ -1,0 +1,148 @@
+% ========================================
+% CHAPTER 1: DEFINITION AND CONTEXT
+% ========================================
+
+\section{Formal Definition of the \textbf{F5 Game}}
+\subsection{General Overview}
+\label{sec:layerA_presentation}
+The \textbf{F5 Game} \footnote{The \textbf{F5 Game} (KSZ Five-Five Card Model, Five² Game, or FF-5 Game) is a zero-sum card game where each player receives five cards and participates in five rounds.} 
+is a strategic card game \cite{parlett1999oxford} based on a reduced deck of 32 cards.
+It combines trick-taking mechanisms, optimal hand management, suit control, and betting, supplemented by a multiplier system — the \emph{Cora} — which provides the game with unique tactical depth.
+
+\subsection*{Origin of the KSZ Card Model Name}
+\label{subsec:origin_nom_ksz}
+
+The designation \textbf{KSZ Card Model} is a structured acronym reflecting the fundamental principles of the model as well as its theoretical framework:
+
+\begin{itemize}
+    \item \textbf{K}: For \textbf{Kaptue}, referring to Guy Kaptue, the author of the formalization and initiator of the model.
+    \item \textbf{S}: For \textbf{Sequential}, emphasizing the sequential nature of the game, structured into several interdependent rounds where successive decisions influence the evolution of the state.
+    \item \textbf{Z}: For \textbf{Zero-Sum}, indicating that the model falls within the framework of zero-sum games, where one player's gains exactly offset another's losses, in accordance with game theory \cite{von1944theory}.
+\end{itemize}
+
+In its specific version known as \textbf{Five-Five}, the model imposes two specific structural characteristics:
+\begin{itemize}
+    \item Each player receives \textbf{5 cards} at the beginning of the game;
+    \item The game unfolds over \textbf{5 sequential rounds}.
+\end{itemize}
+
+Thus, the \textbf{KSZ Card Model} — and specifically its variant, the \textbf{KSZ Five-Five Card Model} (or \textbf{F5 Game}) — designates a rigorous mathematical framework for the study of sequential zero-sum card games, formalized by Guy Kaptue, in which each player holds a fixed number of cards and participates in a determined number of rounds.
+
+\subsection{Equipment and Participants}
+\label{sec:layerA_materiel}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Deck:} 32 cards, values from 3 to 10, divided into four suits.
+    \item \textbf{Players:} $n \in \{2,3,4\}$ participants.
+    \item \textbf{Initial stake:} An amount $M_0$ fixed before the start of the game.
+    \item \textbf{Duration:} Exactly five successive rounds.
+\end{itemize}
+
+\subsection{Basic Rules}
+\label{sec:layerA_regles}
+
+The primary objective is to \textbf{win the fifth and final round}.
+The winner receives the stakes from all players, potentially amplified by a Cora multiplier.
+
+\subsection{Game Progression}
+\label{sec:layerA_deroulement}
+
+\begin{enumerate}[leftmargin=*]
+
+    \item \textbf{Dealer designation:}
+    The winner of the previous game automatically becomes the dealer.
+    For the first game of a session, we choose the dealer randomly or by convention.
+
+    \item \textbf{Choice of play direction:}
+    The dealer sets the rotation direction:
+    \begin{itemize}
+        \item \textbf{Clockwise:} From their right to their left;
+        \item \textbf{Counter-clockwise:} From their left to their right.
+    \end{itemize}
+
+    \item \textbf{Shuffling:}
+    The complete deck $D$ is randomly shuffled.
+
+    \item \textbf{Cutting:}
+    The first player to receive cards decides:
+    \begin{itemize}
+        \item \textbf{Pass:} No cut is performed;
+        \item \textbf{Cut:} They remove an upper block of cards, temporarily set aside.
+    \end{itemize}
+
+    \item \textbf{Dealing:}
+    \begin{enumerate}
+        \item The cards remaining after the cut are dealt first.
+        \item The dealing strictly follows the chosen direction.
+        \item Each player first receives \textbf{3 cards}.
+        \item Then each player receives \textbf{2 additional cards}.
+        \item If the remaining cards are insufficient, we reintegrate the set-aside block.
+    \end{enumerate}
+
+    \item \textbf{Verification of immediate victory conditions:}
+    \begin{itemize}
+        \item If $\Sigma(h_i) \leq 21$, player $i$ wins immediately.
+        \item If $h_i$ contains exactly three cards of value 7, they also win immediately (\emph{triple 7} rule).
+    \end{itemize}
+
+    \item \textbf{Progression of the five rounds:}
+    \begin{itemize}
+        \item The controller chooses a suit $s_r$.
+        \item Each player plays a card, respecting the suit obligation.
+        \item The player with the highest card of the requested suit wins the round.
+        \item The winner becomes the controller for the following round.
+    \end{itemize}
+
+    \item \textbf{Final payment:}
+    The winner of round 5 receives the stakes, potentially multiplied by a Cora.
+\end{enumerate}
+
+\subsection{Special Rules}
+
+\subsubsection{Suit Obligation}
+
+\begin{proprietebox}{Strict suit obligation}{}{}
+If a player possesses at least one card of the requested suit, they \textbf{are required} to play one.
+Any deviation constitutes a fault known as "burning the game" and results in:
+\begin{itemize}
+    \item Immediate disqualification for the current game;
+    \item A financial penalty of $\alpha M_0$ (with $\alpha \geq 1$);
+    \item The obligation to pay even in the event of a winner's Cora.
+\end{itemize}
+\end{proprietebox}
+
+\subsubsection{Cora System}
+
+The Cora is a multiplier applied to the final gain:
+
+\begin{itemize}
+    \item \textbf{Simple Cora:} Victory in round 5 with a card of value 3 $\Rightarrow$ gain $\times 2$;
+    \item \textbf{Double Cora:} Consecutive victories in rounds 4 and 5 with cards of value 3 $\Rightarrow$ gain $\times 4$.
+\end{itemize}
+
+\subsection{Immediate Victory Conditions}
+\label{sec:victoire_immediate}
+
+\begin{itemize}
+    \item \textbf{Victory by sum $\Sigma(h_i) \leq 21$}: If a player has a card sum less than or equal to 21, they immediately win the game.
+    \item \textbf{Victory by triple 7}: If a player possesses exactly three cards of value 7 in their hand, they immediately win the game, regardless of the sum of their cards.
+\end{itemize}
+
+\begin{notebox}{Terminology Note}{}
+Throughout this document, we use only the term \textbf{Immediate Victory Condition} to refer to these special win conditions. The terms ``instant win'' and ``automatic victory'' are avoided for consistency.
+\end{notebox}
+
+\begin{definitionbox}{Triple 7 condition}{def_triple7}
+A hand $h_i$ satisfies the "triple 7" condition if and only if:
+\[
+|\{c \in h_i : \text{val}(c) = 7\}| = 3.
+\]
+\end{definitionbox}
+
+\begin{propositionbox}{Immediate victory by triple 7}{prop_triple7}
+If a player possesses a hand verifying the triple 7 condition, they immediately win the game, independently of other hands.
+\end{propositionbox}
+
+\begin{notebox}{Remark}{}
+We consider this condition as an alternative to the $\Sigma(h_i) \leq 21$ rule, which adds an additional strategic dimension to the game.
+\end{notebox}

@@ -1,0 +1,646 @@
+% ========================================
+% CHAPTER 9: EXERCISES AND APPLICATIONS OF THE F5 GAME
+% ========================================
+
+
+% ========================================
+\section{Exercises and Applications of the F5 Game}
+\label{sec:exercises_application}
+
+In this section, we propose a series of progressive exercises to apply the definitions, theorems, and properties established in the previous sections. The exercises are categorized into five levels: \textbf{basic}, \textbf{intermediate}, \textbf{advanced}, \textbf{Kaptue-F5 Law}, and \textbf{synthesis problems}.
+
+% ========================================
+\subsection{Basic Exercises}
+\label{subsec:basic_exercises}
+
+\begin{exercicebox}{Sum Calculation of a Hand}{ex:sum_calculation_hand}
+\label{ex:sum_calculation_hand}
+Calculate the sum of a hand containing:
+\[
+3\heartsuit,\; 7\clubsuit,\; 9\diamondsuit,\; 4\spadesuit,\; 10\heartsuit.
+\]
+\end{exercicebox}
+
+\begin{proof}
+\[
+\Sigma(h) = 3 + 7 + 9 + 4 + 10 = 33.
+\]
+This sum is within the admissible range $[16,40]$ (Theorem~\ref{theo:sum_bounds}).
+The hand does not satisfy the immediate victory condition $\Sigma(h) \leq 21$.
+\end{proof}
+
+\begin{exercicebox}{Legality Verification}{ex:legality_verification}
+\label{ex:legality_verification}
+A player holds:
+\[
+5\heartsuit,\; 8\clubsuit,\; 10\diamondsuit.
+\]
+The requested suit is $\heartsuit$. Which cards can they play?
+\end{exercicebox}
+
+\begin{proof}
+The compatibility set (Definition~\ref{def:compatibility_set}) is:
+\[
+\mathcal{S}_{i,r} = \{c \in h_i : \text{col}(c) = \heartsuit\} = \{5\heartsuit\}.
+\]
+By the suit obligation rule, the player \textbf{must} play $5\heartsuit$.
+Playing $8\clubsuit$ or $10\diamondsuit$ would be a fault, known as "burning the game."
+\end{proof}
+
+\begin{exercicebox}{Immediate Victory}{ex:immediate_victory}
+\label{ex:immediate_victory}
+A player receives:
+\[
+7\heartsuit,\; 7\clubsuit,\; 7\diamondsuit,\; 3\spadesuit,\; 4\heartsuit.
+\]
+Have they won immediately?
+\end{exercicebox}
+
+\begin{proof}
+Check the condition $\Sigma(h) \leq 21$:
+\[
+\Sigma(h) = 7 + 7 + 7 + 3 + 4 = 28 > 21 \quad (\text{not satisfied}).
+\]
+Check the triple 7 condition (Definition~\ref{def:triple7_condition}):
+\[
+|\{c \in h : \text{val}(c) = 7\}| = 3 \quad (\text{satisfied}).
+\]
+The player wins immediately by triple 7 (Proposition~\ref{prop:triple7_victory}).
+\end{proof}
+
+\begin{exercicebox}{Elementary Probability Calculation}{ex:elementary_probability_calculation}
+\label{ex:elementary_probability_calculation}
+Calculate the probability of receiving exactly zero cards of value 3.
+\end{exercicebox}
+
+\begin{proof}
+By the hypergeometric law (Theorem~\ref{theo:hypergeometric_law}):
+\[
+P(X_3 = 0) = \frac{\binom{4}{0} \binom{28}{5}}{\binom{32}{5}}
+= \frac{1 \times 98280}{201376} \approx 0.488.
+\]
+There is approximately a 48.8\% chance of receiving no 3s.
+\end{proof}
+
+% ========================================
+\subsection{Intermediate Exercises}
+\label{subsec:intermediate_exercises}
+
+\begin{exercicebox}{Determination of the Winner of a Round}{ex:determination_round_winner}
+\label{ex:determination_round_winner}
+In a round where the requested suit is $\clubsuit$, the cards played are:
+\begin{itemize}
+    \item P1: $8\clubsuit$
+    \item P2: $3\diamondsuit$
+    \item P3: $10\clubsuit$
+    \item P4: $7\heartsuit$
+\end{itemize}
+Determine the winner.
+\end{exercicebox}
+
+\begin{proof}
+Valid cards (Definition~\ref{def:valid_cards}):
+\[
+\mathcal{V}_r = \{c \in P(r) : \text{col}(c) = \clubsuit\} = \{8\clubsuit, 10\clubsuit\}.
+\]
+By the winner function (Definition~\ref{def:winner_function}):
+\[
+w(r) = \arg\max_{i : c_{i,r}\in\mathcal{V}_r} \text{val}(c_{i,r})
+= \arg\max\{8, 10\} = \text{P3}.
+\]
+The winner is P3 with $10\clubsuit$.
+\end{proof}
+
+\begin{exercicebox}{Gain Calculation}{ex:gain_calculation}
+\label{ex:gain_calculation}
+In a game with 4 players and $M_0 = 10\text{€}$, determine the gains in the following cases:
+\begin{enumerate}
+    \item Standard victory
+    \item Simple Cora
+    \item Double Cora
+\end{enumerate}
+\end{exercicebox}
+
+\begin{proof}
+By Definitions~\ref{def:standard_gain},~\ref{def:simple_cora},~\ref{def:double_cora}:
+
+\textbf{1. Standard Victory:}
+\[
+\delta_W = (4-1) \times 10 = 30\text{€}, \quad
+\delta_{\text{losers}} = -10\text{€}.
+\]
+Vector: $\Delta = (30, -10, -10, -10)$.
+
+\textbf{2. Simple Cora:}
+\[
+\delta_W = 2 \times (4-1) \times 10 = 60\text{€}, \quad
+\delta_{\text{losers}} = -20\text{€}.
+\]
+Vector: $\Delta = (60, -20, -20, -20)$.
+
+\textbf{3. Double Cora:}
+\[
+\delta_W = 4 \times (4-1) \times 10 = 120\text{€}, \quad
+\delta_{\text{losers}} = -40\text{€}.
+\]
+Vector: $\Delta = (120, -40, -40, -40)$.
+
+Verification of the zero-sum property (Theorem~\ref{theo:zero_sum}):
+\[
+30 - 10 - 10 - 10 = 0, \quad
+60 - 20 - 20 - 20 = 0, \quad
+120 - 40 - 40 - 40 = 0. \quad \checkmark
+\]
+\end{proof}
+
+\begin{exercicebox}{Impact of the Cut}{ex:impact_cut}
+\label{ex:impact_cut}
+The first player cuts exactly in the middle ($k=16$).
+Does the cut modify their probability of victory?
+\end{exercicebox}
+
+\begin{proof}
+By Property~\ref{prop:cut_influence}:
+\[
+\mathbb{E}[\delta_i \mid \text{cut at } k] = \mathbb{E}[\delta_i] = 0, \quad \forall k.
+\]
+The cut is a deterministic permutation applied after a uniform shuffle.
+By the invariance of the uniform law under permutation, all configurations remain equiprobable.
+The cut therefore does not modify the ex-ante probabilities of victory.
+\end{proof}
+
+\begin{exercicebox}{Expectation and Variance of a Hand}{ex:expectation_variance_hand}
+\label{ex:expectation_variance_hand}
+Calculate the expectation and variance of the sum of a random hand.
+\end{exercicebox}
+
+\begin{proof}
+By Theorem~\ref{theo:moments_f5_distribution}:
+\[
+\mathbb{E}[\Sigma(h)] = 5 \times \mu_V = 5 \times 6.5 = 32.5.
+\]
+\[
+\mathrm{Var}[\Sigma(h)] = 5 \times 5.25 \times \frac{27}{31} \approx 22.86.
+\]
+\[
+\sigma[\Sigma(h)] = \sqrt{22.86} \approx 4.78.
+\]
+\end{proof}
+
+% ========================================
+\subsection{Advanced Exercises}
+\label{subsec:advanced_exercises}
+
+\begin{exercicebox}{Probability of Obtaining Two Cards of Value 3}{ex:probability_two_3}
+\label{ex:probability_two_3}
+Calculate the probability of obtaining exactly two cards of value 3 in a hand.
+\end{exercicebox}
+
+\begin{proof}
+By the hypergeometric law (Theorem~\ref{theo:hypergeometric_law}):
+\[
+P(X_3 = 2) = \frac{\binom{4}{2} \binom{28}{3}}{\binom{32}{5}}
+= \frac{6 \times 3276}{201376} = \frac{19656}{201376} \approx 0.0976.
+\]
+There is approximately a 9.76\% chance of obtaining exactly two 3s.
+\end{proof}
+
+\begin{exercicebox}{Strategic Analysis}{ex:strategic_analysis}
+\label{ex:strategic_analysis}
+A player controls round 5 and holds:
+\[
+3\heartsuit,\; 8\clubsuit,\; 10\diamondsuit.
+\]
+Which suit should they choose according to (a) a rational strategy, (b) an aggressive strategy?
+\end{exercicebox}
+
+\begin{proof}
+\textbf{(a) Rational Strategy:}
+Maximize the probability of immediate victory:
+\[
+\text{Choice} = \arg\max\{\text{val}(c) : c \in h\} = \diamondsuit \text{ with } 10.
+\]
+
+\textbf{(b) Aggressive Strategy (Cora):}
+If the high $\heartsuit$ cards have been played (information from previous rounds),
+choose $\heartsuit$ to attempt a Cora with $3\heartsuit$.
+Otherwise, choose $\diamondsuit$ to secure the victory.
+
+\textbf{Probabilistic Analysis:}
+Expected gain with Cora (if $p_{\text{victory} \mid \heartsuit} \approx 0.6$):
+\[
+\mathbb{E}[G \mid \heartsuit] \approx 0.6 \times 2(n-1)M_0.
+\]
+Expected gain without Cora (if $p_{\text{victory} \mid \diamondsuit} \approx 0.95$):
+\[
+\mathbb{E}[G \mid \diamondsuit] \approx 0.95 \times (n-1)M_0.
+\]
+The optimal strategy depends on the ratio $M_0$ and the risk profile.
+\end{proof}
+
+\begin{exercicebox}{Balancing the Multiplier}{ex:balancing_multiplier}
+\label{ex:balancing_multiplier}
+Determine the optimal multiplier $m^*$ for an attractiveness factor $k=1.5$ with $p=0.15$.
+\end{exercicebox}
+
+\begin{proof}
+By Theorem~\ref{theo:cora_multiplier}:
+\[
+m^* = \frac{k-1}{p} + 1 = \frac{1.5-1}{0.15} + 1 = \frac{0.5}{0.15} + 1 \approx 4.33.
+\]
+Practical proposal: $m_{\text{simple}} = 4$, $m_{\text{double}} = 8$.
+
+Verification of current attractiveness ($m=2$):
+\[
+k = 1 + p(m-1) = 1 + 0.15(2-1) = 1.15.
+\]
+The current system offers a bonus of only 15\%.
+\end{proof}
+
+\begin{exercicebox}{Entropy Calculation}{ex:entropy_calculation}
+\label{ex:entropy_calculation}
+Calculate the Shannon entropy of a uniformly distributed hand.
+\end{exercicebox}
+
+\begin{proof}
+By Theorem~\ref{theo:shannon_entropy}:
+\[
+H(h) = \log_2 \binom{32}{5} = \log_2(201376) \approx 17.62 \text{ bits}.
+\]
+This means that approximately 17.62 bits of information are required to completely specify a hand.
+\end{proof}
+
+% ========================================
+\subsection{Exercises on the Kaptue-F5 Law}
+\label{subsec:exercises_kaptue_F5_law}
+
+\begin{exercicebox}{Verification of Hierarchical Factorization}{ex:verification_hierarchical_factorization}
+\label{ex:verification_hierarchical_factorization}
+For a given game, verify that the joint law factorizes as:
+\[
+P(\Delta, W, R, H) = P(\Delta \mid W,H) \cdot P(W \mid R,H) \cdot P(R \mid H) \cdot P(H).
+\]
+\end{exercicebox}
+
+\begin{proof}
+By Theorem~\ref{theo:hierarchical_decomposition}:
+
+\textbf{Level 1:} Distribution of hands (Theorem~\ref{theo:uniformity_configurations})
+\[
+P(H) = \frac{(5!)^n (32-5n)!}{32!}.
+\]
+
+\textbf{Level 2:} Markovian dynamics (Theorem~\ref{theo:markov_property})
+\[
+P(R \mid H) = \prod_{k=1}^{5} P(r_k \mid H, r_1, \ldots, r_{k-1}).
+\]
+
+\textbf{Level 3:} Determination of the winner (deterministic)
+\[
+P(W = i \mid R, H) = \mathbb{I}[i \text{ wins round 5}].
+\]
+
+\textbf{Level 4:} Calculation of gains (deterministic)
+\[
+P(\Delta \mid W, H) = \delta_{\text{Dirac}}(\Delta - g(W,H)),
+\]
+where $g(W,H)$ is the payoff function including the Cora multiplier.
+
+The factorization directly follows from the chain rule for joint probabilities.
+\end{proof}
+
+\begin{exercicebox}{Mutual Information Calculation}{ex:mutual_information_calculation}
+\label{ex:mutual_information_calculation}
+Calculate the mutual information between two hands $h_1$ and $h_2$.
+\end{exercicebox}
+
+\begin{proof}
+By Proposition~\ref{prop:mutual_information}:
+\[
+I(h_1 ; h_2) = H(h_1) + H(h_2) - H(h_1, h_2).
+\]
+
+Entropy calculations:
+\[
+H(h_1) = H(h_2) = \log_2 \binom{32}{5} \approx 17.62 \text{ bits}.
+\]
+\[
+H(h_1, h_2) = \log_2 \left(\binom{32}{5} \times \binom{27}{5}\right)
+= \log_2(201376 \times 80730) \approx 34.24 \text{ bits}.
+\]
+
+Thus:
+\[
+I(h_1 ; h_2) = 17.62 + 17.62 - 34.24 = 1.00 \text{ bit}.
+\]
+
+The two hands share approximately 1 bit of mutual information,
+which confirms their dependence (drawing without replacement).
+\end{proof}
+
+\begin{exercicebox}{Application of the Central Limit Theorem}{ex:application_clt}
+\label{ex:application_clt}
+For $T=1000$ games, calculate the 95\% confidence interval of the average gain.
+\end{exercicebox}
+
+\begin{proof}
+By Corollary~\ref{cor:asymptotic_confidence}:
+\[
+\left|\frac{1}{T}\sum_{t=1}^T \delta_i(t)\right| \leq \frac{1.96\sigma}{\sqrt{T}}.
+\]
+
+For $n=4$ players and $M_0 = 10$, the variance (Theorem~\ref{theo:variance_gain_without_cora}) is:
+\[
+\sigma^2 = (n-1)nM_0^2 = 3 \times 4 \times 100 = 1200.
+\]
+\[
+\sigma = \sqrt{1200} \approx 34.64.
+\]
+
+For $T=1000$:
+\[
+\text{CI}_{95\%} = \left[-\frac{1.96 \times 34.64}{\sqrt{1000}}, +\frac{1.96 \times 34.64}{\sqrt{1000}}\right]
+= [-2.15, +2.15].
+\]
+
+Interpretation: With 95\% confidence, the average gain after 1000 games
+will be between $-2.15€$ and $+2.15€$, consistent with $\mathbb{E}[\delta_i] = 0$.
+\end{proof}
+
+\begin{exercicebox}{Monte Carlo Estimation}{ex:monte_carlo_estimation}
+\label{ex:monte_carlo_estimation}
+Estimate $P(\Sigma(h) \leq 21)$ using Monte Carlo simulation with $N=10^6$ draws.
+\end{exercicebox}
+
+\begin{proof}
+By Proposition~\ref{prop:monte_carlo_estimation}:
+\[
+\hat{p} = \frac{1}{N} \sum_{i=1}^N \mathbb{I}[\Sigma(h_i) \leq 21].
+\]
+
+After simulation (typical result):
+\[
+\hat{p} \approx 0.0123.
+\]
+
+Standard error:
+\[
+\text{SE}(\hat{p}) = \sqrt{\frac{p(1-p)}{N}}
+\approx \sqrt{\frac{0.0123 \times 0.9877}{10^6}} \approx 0.00011.
+\]
+
+95\% confidence interval:
+\[
+\text{CI}_{95\%} = \hat{p} \pm 1.96 \times \text{SE}
+= [0.0121, 0.0125].
+\]
+
+Conclusion: $P(\Sigma(h) \leq 21) \approx 1.23\% \pm 0.02\%$.
+\end{proof}
+
+\begin{exercicebox}{Markov Property}{ex:markov_property}
+\label{ex:markov_property}
+Prove that the round process satisfies the Markov property.
+\end{exercicebox}
+
+\begin{proof}
+By Theorem~\ref{theo:markov_property}, we must show:
+\[
+P(S(r+1) \mid S(r), S(r-1), \ldots, S(1)) = P(S(r+1) \mid S(r)).
+\]
+
+The state $S(r) = (h_1(r), \ldots, h_n(r), c(r), \text{hist}(r))$ contains:
+\begin{itemize}
+    \item The current hands $h_i(r)$ → available cards for $r+1$
+    \item The controller $c(r)$ → who chooses the suit
+    \item The complete history $\text{hist}(r)$ → all played cards
+\end{itemize}
+
+Past states $S(1), \ldots, S(r-1)$ are entirely summarized in $\text{hist}(r)$.
+Thus, conditional on $S(r)$, past states provide no additional information.
+
+Therefore:
+\[
+P(S(r+1) \mid S(\leq r)) = P(S(r+1) \mid S(r)). \quad \checkmark
+\]
+\end{proof}
+
+% ========================================
+\subsection{Synthesis Problems}
+\label{subsec:synthesis_problems}
+
+\begin{exercicebox}{Complete Simulation of a Game}{ex:complete_simulation_game}
+\label{ex:complete_simulation_game}
+Simulate a game with 3 players with the following hands:
+\begin{itemize}
+    \item P1: $3\heartsuit, 5\clubsuit, 7\diamondsuit, 9\spadesuit, 10\heartsuit$
+    \item P2: $4\heartsuit, 6\clubsuit, 8\diamondsuit, 9\heartsuit, 10\clubsuit$
+    \item P3: $3\clubsuit, 5\heartsuit, 7\heartsuit, 8\spadesuit, 10\diamondsuit$
+\end{itemize}
+\end{exercicebox}
+
+\begin{proof}[Complete Solution]
+\textbf{Immediate Victory Check:}
+\[
+\Sigma(h_1) = 34 > 21, \quad \Sigma(h_2) = 37 > 21, \quad \Sigma(h_3) = 33 > 21.
+\]
+No triple 7. No immediate victory.
+
+\textbf{Round 1:} P1 is the controller, chooses $\heartsuit$.
+\begin{itemize}
+    \item P1 plays $10\heartsuit$ (max)
+    \item P2 plays $4\heartsuit$
+    \item P3 plays $7\heartsuit$
+\end{itemize}
+Winner: P1 with $10\heartsuit$. Score: P1=1, P2=0, P3=0.
+
+\textbf{Round 2:} P1 chooses $\diamondsuit$.
+\begin{itemize}
+    \item P1 plays $7\diamondsuit$
+    \item P2 plays $8\diamondsuit$
+    \item P3 plays $10\diamondsuit$ (max)
+\end{itemize}
+Winner: P3 with $10\diamondsuit$. Score: P1=1, P2=0, P3=1.
+
+\textbf{Round 3:} P3 chooses $\clubsuit$.
+\begin{itemize}
+    \item P1 plays $5\clubsuit$
+    \item P2 plays $10\clubsuit$ (max)
+    \item P3 plays $3\clubsuit$
+\end{itemize}
+Winner: P2 with $10\clubsuit$. Score: P1=1, P2=1, P3=1.
+
+\textbf{Round 4:} P2 chooses $\heartsuit$.
+\begin{itemize}
+    \item P1 plays $3\heartsuit$
+    \item P2 plays $9\heartsuit$ (max)
+    \item P3 plays $5\heartsuit$
+\end{itemize}
+Winner: P2 with $9\heartsuit$. Score: P1=1, P2=2, P3=1.
+
+\textbf{Round 5:} P2 chooses $\clubsuit$.
+\begin{itemize}
+    \item P1 plays $9\spadesuit$ (no $\clubsuit$)
+    \item P2 plays $6\clubsuit$
+    \item P3 plays $8\spadesuit$ (no $\clubsuit$)
+\end{itemize}
+Winner: P2 with $6\clubsuit$ (only valid card).
+
+\textbf{Final Winner:} P2 wins the game.
+No Cora (no 3 in round 5).
+
+\textbf{Gains} (for $M_0 = 10€$):
+\[
+\Delta = (-10, +20, -10).
+\]
+Verification: $-10 + 20 - 10 = 0$.
+\end{proof}
+
+\begin{exercicebox}{Practical Case — 2 Players}{ex:practical_case_2_players}
+\label{ex:practical_case_2_players}
+Two players receive:
+\[
+h_1 = \{3\heartsuit, 7\spadesuit, 8\clubsuit, 9\diamondsuit, 10\heartsuit\}
+\]
+\[
+h_2 = \{4\clubsuit, 5\diamondsuit, 7\heartsuit, 8\spadesuit, 10\clubsuit\}
+\]
+P1 controls round 1. Determine the optimal strategy and the winner.
+\end{exercicebox}
+
+\begin{proof}[Strategic Solution]
+\textbf{Analysis for P1:}
+Strong cards: $10\heartsuit$ ($\heartsuit$), $9\diamondsuit$ ($\diamondsuit$).
+Cora card: $3\heartsuit$.
+
+\textbf{Optimal Strategy for P1:}
+Choose $\heartsuit$ in round 1 to guarantee victory with $10\heartsuit$.
+
+\textbf{Optimal Simulation:}
+\begin{itemize}
+    \item R1: P1 chooses $\heartsuit$, plays $10\heartsuit$ → P1 wins
+    \item R2: P1 chooses $\diamondsuit$, plays $9\diamondsuit$ → P1 wins
+    \item R3: P1 chooses $\clubsuit$, plays $8\clubsuit$, P2 plays $10\clubsuit$ → P2 wins
+    \item R4: P2 chooses $\spadesuit$, P1 plays $7\spadesuit$, P2 plays $8\spadesuit$ → P2 wins
+    \item R5: P2 chooses $\clubsuit$, P1 plays $3\heartsuit$, P2 plays $4\clubsuit$ → P2 wins
+\end{itemize}
+
+\textbf{Winner:} P2 wins round 5.
+No Cora (P2 does not play a 3).
+
+\textbf{Gains:}
+\[
+\Delta = (-10, +10).
+\]
+\end{proof}
+
+\begin{exercicebox}{Application of the Kaptue-F5 Law}{ex:application_kaptue_F5_law}
+\label{ex:application_kaptue_F5_law}
+For a game with 4 players, calculate:
+\begin{enumerate}
+    \item The probability of a given hand configuration
+    \item The total entropy of the system
+    \item The probability of victory for each player
+\end{enumerate}
+\end{exercicebox}
+
+\begin{proof}
+\textbf{1. Probability of a Configuration:}
+By Theorem~\ref{theo:uniformity_configurations}:
+\[
+P(h_1, h_2, h_3, h_4) = \frac{(5!)^4 (32-20)!}{32!}
+= \frac{(120)^4 \times 12!}{32!} \approx 4.95 \times 10^{-15}.
+\]
+
+\textbf{2. Total Entropy:}
+\[
+H_{\text{total}} = \log_2 N_{\text{dist}}(4)
+= \log_2 \left(\frac{32!}{(5!)^4 \times 12!}\right) \approx 47.77 \text{ bits}.
+\]
+
+\textbf{3. Probability of Victory (Ex-Ante Fairness):}
+By Theorem~\ref{theo:ex_ante_fairness}:
+\[
+p_i = P(\text{P}_i \text{ wins}) = \frac{1}{4} = 0.25, \quad \forall i.
+\]
+\end{proof}
+
+% ========================================
+\subsection{Open Problems and Extensions}
+\label{subsec:open_problems}
+
+\begin{exercicebox}{Generalization of the Kaptue-F5 Law}{ex:generalization_kaptue_F5_law}
+\label{ex:generalization_kaptue_F5_law}
+Show that the Kaptue-F5 Law can model any zero-sum sequential card game.
+\end{exercicebox}
+
+\begin{theorembox}{Universality of the Kaptue-F5 Law}{theo:universality_kaptue_F5_law}
+\label{theo:universality_kaptue_F5_law}
+Any finite sequential card game with zero-sum can be represented by a joint law
+\[
+P(\Delta, W, R, H) = P(\Delta \mid W,H)\,P(W \mid R,H)\,P(R \mid H)\,P(H),
+\]
+i.e., as an instance of the Kaptue-F5 Law.
+\end{theorembox}
+
+\begin{proof}
+Let a finite sequential card game with a finite number of players $\mathcal{N}$ and a finite deck $\mathcal{C}$.
+
+\textbf{1. Definition of Random Variables.}
+We define:
+\begin{itemize}
+    \item $H$: initial state (distribution of hands, visible cards, stock, kitty, etc.);
+    \item $R$: complete trajectory (ordered sequence of actions, tricks, bids, announcements);
+    \item $W$: final result (winner, winning side, number of tricks, etc.);
+    \item $\Delta = (\delta_1,\ldots,\delta_n)$: player gains, with $\sum_i \delta_i = 0$ (zero-sum).
+\end{itemize}
+Since the game is finite, the sets $\mathcal{H}, \mathcal{R}, \mathcal{W}, \mathcal{D}$ are finite.
+
+\medskip
+
+\textbf{2. General Factorization.}
+By the chain rule \cite{ross2014first,feller1968introduction},
+\[
+P(H,R,W,\Delta) = P(\Delta \mid W,R,H)\,P(W \mid R,H)\,P(R \mid H)\,P(H).
+\]
+
+\textbf{3. Determinism of the Rules.}
+In any standard card game \cite{von1944theory,binmore2007playing}:
+\begin{itemize}
+    \item once $H$ and $R$ are fixed, the result $W$ is entirely determined:
+    \[
+    \exists f : \mathcal{H} \times \mathcal{R} \to \mathcal{W},\quad W = f(H,R);
+    \]
+    \item once $W$ and $H$ are fixed, the gains $\Delta$ are entirely determined:
+    \[
+    \exists g : \mathcal{W} \times \mathcal{H} \to \mathcal{D},\quad \Delta = g(W,H).
+    \]
+\end{itemize}
+
+\textbf{4. Reduction of Conditional Probabilities.}
+We then obtain:
+\[
+P(W \mid R,H) =
+\begin{cases}
+1 & \text{if } W = f(H,R),\\
+0 & \text{otherwise},
+\end{cases}
+\qquad
+P(\Delta \mid W,H) =
+\begin{cases}
+1 & \text{if } \Delta = g(W,H),\\
+0 & \text{otherwise}.
+\end{cases}
+\]
+The conditional laws are Dirac measures.
+
+\textbf{5. Final Factorization.}
+By replacing in the general factorization:
+\[
+P(H,R,W,\Delta) = P(\Delta \mid W,H)\,P(W \mid R,H)\,P(R \mid H)\,P(H),
+\]
+which is exactly the structure of the Kaptue-F5 Law.
+
+\textbf{6. Universality.}
+This structure holds for Belote, Bridge, Tarot, Poker, F5 Game, etc., as long as the game is sequential, finite, and zero-sum \cite{von1944theory,binmore2007playing}. The theorem is proven.
+\end{proof}

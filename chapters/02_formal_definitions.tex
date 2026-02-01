@@ -1,0 +1,348 @@
+% ========================================
+% CHAPTER 2: MATHEMATICAL FRAMEWORK
+% ========================================
+
+\section{Mathematical Framework of the \textbf{F5 Game}}
+\label{chap:math_framework}
+
+This chapter establishes the fundamental mathematical structure of the \textbf{F5 Game}. The objects manipulated — cards, players, hands, game states — are defined axiomatically to allow for the formal statement and rigorous proof of the game's properties in the following chapters.
+
+% ========================================
+\subsection{Fundamental Sets}
+\label{subsec:fundamental_sets}
+
+\begin{definitionbox}{Set of values}{def:values}
+\label{def:values}
+The set of possible values for a card is:
+\[
+V = \{3,4,5,6,7,8,9,10\} \subset \N,
+\qquad |V| = 8.
+\]
+\end{definitionbox}
+
+\begin{definitionbox}{Set of suits}{def:suits}
+\label{def:suits}
+The set of suits (colors) is:
+\[
+S = \{\heartsuit,\clubsuit,\diamondsuit,\spadesuit\},
+\qquad |S| = 4.
+\]
+\end{definitionbox}
+
+\begin{definitionbox}{Vernacular names of suits}{def:suit_names}
+\label{def:suit_names}
+Each suit $s \in S$ is associated with a common name in the game:
+\[
+\text{name}(s) \in \{\text{Zin},\text{Tchaka},\text{Coubi},\text{Black}\}.
+\]
+\begin{itemize}
+    \item $\diamondsuit$: \textbf{Zin}
+    \item $\clubsuit$: \textbf{Tchaka}
+    \item $\heartsuit$: \textbf{Coubi}
+    \item $\spadesuit$: \textbf{Black}
+\end{itemize}
+\end{definitionbox}
+
+\begin{notebox}{Usage of vernacular names}{note:suit_names}
+\label{note:suit_names}
+We use these names in oral announcements, particularly when the controller of a round chooses the required suit.
+\end{notebox}
+
+\begin{definitionbox}{Card space}{def:card_space}
+\label{def:card_space}
+The card space is the Cartesian product \cite{grimaldi2003discrete}:
+\[
+\C = V \times S = \{(v,s) : v \in V,\ s \in S\}.
+\]
+The full deck is:
+\[
+D = \C, \qquad |D| = 32.
+\]
+\end{definitionbox}
+
+% ========================================
+\subsection{Players and Structural Parameters}
+\label{subsec:players_parameters}
+
+\begin{definitionbox}{Set of players}{def:players}
+\label{def:players}
+The set of players is:
+\[
+\mathcal{N} = \{1,2,\ldots,n\},
+\qquad n \in \{2,3,4\}.
+\]
+\end{definitionbox}
+
+
+
+\begin{definitionbox}{Dealer}{def:dealer}
+\label{def:dealer}
+The dealer $d \in \mathcal{N}$ is the winner of the previous game. For the first game of a session, we choose $d$ randomly or by convention.
+\end{definitionbox}
+
+
+
+\begin{definitionbox}{Direction of play}{def:play_direction}
+\label{def:play_direction}
+The direction of play is a variable:
+\[
+\text{direction} \in \{\text{clockwise},\text{counter-clockwise}\},
+\]
+determining the order of application of the circular permutation $\sigma$ on $\mathcal{N}$.
+\end{definitionbox}
+
+\begin{definitionbox}{Initial stake}{def:initial_stake}
+\label{def:initial_stake}
+The initial stake is a strictly positive real number:
+\[
+M_0 \in \R_+^*.
+\]
+\end{definitionbox}
+
+\begin{definitionbox}{Number of rounds}{def:nb_rounds}
+\label{def:nb_rounds}
+The number of rounds in a game is constant:
+\[
+R = 5.
+\]
+\end{definitionbox}
+
+% ========================================
+\subsection{Dealing and Hands}
+\label{subsec:dealing_hands}
+
+\begin{definitionbox}{Player's hand}{def:player_hand}
+\label{def:player_hand}
+A player $i$'s hand is a subset \cite{grimaldi2003discrete}:
+\[
+h_i \subseteq D.
+\]
+\end{definitionbox}
+
+\begin{definitionbox}{Valid distribution}{def:valid_distribution}
+\label{def:valid_distribution}
+A valid distribution is a partition:
+\[
+\mathcal{D} = (h_1,\ldots,h_n,h_{\text{rest}})
+\]
+such that:
+\begin{enumerate}
+    \item $\bigcup_{i=1}^n h_i \cup h_{\text{rest}} = D$;
+    \item $h_i \cap h_j = \emptyset$ for $i \neq j$;
+    \item $|h_i| = 5$ for all $i$;
+    \item $|h_{\text{rest}}| = 32 - 5n$.
+\end{enumerate}
+\end{definitionbox}
+
+\begin{definitionbox}{Cutting the deck}{def:deck_cut}
+\label{def:deck_cut}
+The first player to receive cards chooses:
+\begin{itemize}
+    \item \textbf{Pass:} no cut;
+    \item \textbf{Cut:} choice of an integer $k \in \{1,\ldots,32\}$, defining:
+    \[
+    D_{\text{top}} = (c_1,\ldots,c_k),\qquad
+    D_{\text{bottom}} = (c_{k+1},\ldots,c_{32}).
+    \]
+\end{itemize}
+\end{definitionbox}
+
+\begin{definitionbox}{Dealing procedure}{def:dealing_procedure}
+\label{def:dealing_procedure}
+Dealing is a deterministic application producing a valid distribution, according to the rules:
+\begin{enumerate}
+    \item each player first receives 3 cards;
+    \item then 2 additional cards;
+    \item if $D_{\text{bottom}}$ is exhausted, we concatenate $D_{\text{top}}$.
+\end{enumerate}
+\end{definitionbox}
+
+% ========================================
+\subsection{Fundamental Functions}
+\label{subsec:fundamental_functions}
+
+\begin{definitionbox}{Value function}{def:value_function}
+\label{def:value_function}
+The value function is the canonical projection:
+\[
+\text{val} : \C \to V,\qquad \text{val}((v,s)) = v.
+\]
+\end{definitionbox}
+
+\begin{definitionbox}{Suit function}{def:suit_function}
+\label{def:suit_function}
+The suit function is the second projection:
+\[
+\text{col} : \C \to S,\qquad \text{col}((v,s)) = s.
+\]
+\end{definitionbox}
+
+\begin{definitionbox}{Hand sum}{def:hand_sum}
+\label{def:hand_sum}
+The sum of the values of a hand $h$ is:
+\[
+\Sigma(h) = \sum_{c \in h} \text{val}(c).
+\]
+\end{definitionbox}
+
+\begin{notebox}{Properties of projections}{note:projection_properties}
+\label{note:projection_properties}
+The functions $\text{val}$ and $\text{col}$ are total, deterministic, surjective, and non-injective. They constitute the natural projections \cite{grimaldi2003discrete} of the Cartesian product $V \times S$.
+\end{notebox}
+
+% ========================================
+\subsection{Game State}
+\label{subsec:game_state}
+
+\begin{definitionbox}{Instantaneous game state}{def:game_state}
+\label{def:game_state}
+A game state at time $t$ is a tuple:
+\[
+G(t) = (H(t), r(t), c(t), s_r, P(t), \sigma, \text{direction}, d, M_0, \text{Disq}(t)),
+\]
+where:
+\begin{itemize}
+    \item $H(t)$: vector of hands;
+    \item $r(t)$: current round;
+    \item $c(t)$: controller;
+    \item $s_r$: requested suit;
+    \item $P(t)$: cards played;
+    \item $\sigma$: circular permutation;
+    \item $\text{direction}$: direction of play;
+    \item $d$: dealer;
+    \item $M_0$: initial stake;
+    \item $\text{Disq}(t)$: disqualified players.
+\end{itemize}
+\end{definitionbox}
+
+\begin{propositionbox}{Markovian round evolution}{prop:markov_property}
+\label{prop:markov_property}
+The sequence of game states $(G(t))_{t=1}^5$ forms a finite, non-stationary Markov chain. That is, for any round $r \in \{1,2,3,4\}$:
+\[
+P(G(r+1) \mid G(r), G(r-1), \ldots, G(1)) = P(G(r+1) \mid G(r)).
+\]
+\end{propositionbox}
+
+\begin{proof}
+The state $G(r)$ contains all information needed to determine the distribution of $G(r+1)$:
+\begin{itemize}
+    \item The current hands $H(r)$ determine the available cards;
+    \item The controller $c(r)$ determines who chooses the suit;
+    \item The history of played cards is included in $G(r)$.
+\end{itemize}
+Past states $G(1), \ldots, G(r-1)$ provide no additional information once $G(r)$ is known. This is precisely the Markov property.
+\end{proof}
+
+% ========================================
+\subsection{Compatibility and Playability}
+\label{subsec:compatibility_playability}
+
+\begin{definitionbox}{Compatibility set}{def:compatibility_set}
+\label{def:compatibility_set}
+For a player $i$ and a requested suit $s_r$:
+\[
+\mathcal{S}_{i,r} = \{c \in h_i(r) : \text{col}(c) = s_r\}.
+\]
+\end{definitionbox}
+
+\begin{definitionbox}{Legal playability}{def:legal_playability}
+\label{def:legal_playability}
+A card $c$ is legally playable if:
+\[
+\mathcal{S}_{i,r} = \emptyset
+\quad\text{or}\quad
+c \in \mathcal{S}_{i,r}.
+\]
+\end{definitionbox}
+
+% ========================================
+\subsection{Winner Determination}
+\label{subsec:winner_determination}
+
+\begin{definitionbox}{Valid cards for victory}{def:valid_cards}
+\label{def:valid_cards}
+The valid cards for round $r$ are:
+\[
+\mathcal{V}_r = \{c \in P(r) : \text{col}(c) = s_r\}.
+\]
+\end{definitionbox}
+
+\begin{definitionbox}{Winner function}{def:winner_function}
+\label{def:winner_function}
+The winner of round $r$ is:
+\[
+w(r) = \arg\max_{i : c_{i,r} \in \mathcal{V}_r} \text{val}(c_{i,r}).
+\]
+\end{definitionbox}
+
+% ========================================
+\subsection{Immediate Victory Conditions}
+\label{subsec:immediate_victory}
+
+\begin{definitionbox}{Triple 7 condition}{def:triple7_condition}
+\label{def:triple7_condition}
+A hand $h_i$ satisfies the "triple 7" condition if and only if:
+\[
+|\{c \in h_i : \text{val}(c) = 7\}| = 3.
+\]
+\end{definitionbox}
+
+\begin{propositionbox}{Immediate victory by triple 7}{prop:triple7_victory}
+\label{prop:triple7_victory}
+If a player possesses a hand verifying the triple 7 condition, they immediately win the game, independently of other hands.
+\end{propositionbox}
+
+\begin{notebox}{Remark on immediate victory}{note:immediate_victory}
+\label{note:immediate_victory}
+We consider this condition as an alternative to the $\Sigma(h_i) \leq 21$ rule.
+\end{notebox}
+
+% ========================================
+\subsection{Payment System}
+\label{subsec:payment_system}
+
+\begin{definitionbox}{Standard gain}{def:standard_gain}
+\label{def:standard_gain}
+\[
+G_{\text{std}}(W) = (n-1)M_0.
+\]
+\end{definitionbox}
+
+\begin{definitionbox}{Simple Cora}{def:simple_cora}
+\label{def:simple_cora}
+If $\text{val}(c_{W,5}) = 3$, then:
+\[
+G_{\text{cora}}(W) = 2(n-1)M_0.
+\]
+\end{definitionbox}
+
+\begin{definitionbox}{Double Cora}{def:double_cora}
+\label{def:double_cora}
+If $\text{val}(c_{W,5}) = 3$ and $\text{val}(c_{W,4}) = 3$, then:
+\[
+G_{\text{double}}(W) = 4(n-1)M_0.
+\]
+\end{definitionbox}
+
+\begin{definitionbox}{Payoff vector}{def:payoff_vector}
+\label{def:payoff_vector}
+The payoff vector is:
+\[
+\Delta = (\delta_1,\ldots,\delta_n) \in \R^n,
+\qquad
+\sum_{i=1}^n \delta_i = 0.
+\]
+\end{definitionbox}
+
+% ========================================
+\subsection{Mathematical Interest}
+\label{subsec:math_interest}
+
+The \textbf{F5 Game} presents a rich mathematical structure, allowing us to establish formal results \cite{von1944theory} such as:
+\begin{itemize}
+    \item the impossibility of certain configurations (Theorem~\ref{theo:impossible_config});
+    \item the guaranteed uniqueness of the winner of a round (Theorem~\ref{theo:winner_uniqueness});
+    \item the strict conservation of the total stake (Theorem~\ref{theo:zero_sum});
+    \item a controlled algorithmic complexity (Theorem~\ref{theo:complexity_summary});
+    \item the probabilistic analysis of immediate victory conditions.
+\end{itemize}

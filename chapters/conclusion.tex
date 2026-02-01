@@ -1,0 +1,114 @@
+% ========================================
+% CONCLUSION OF THE F5 GAME
+% ========================================
+
+\section*{Conclusion}
+\label{sec:conclusion}
+\addcontentsline{toc}{section}{Conclusion}
+
+The formalization presented in this document establishes a complete and consistent mathematical foundation for the **F5 Game** (KSZ Five-Five Card Model). This analysis demonstrates that the game, although originating from a recreational context, possesses an internal structure rich enough to be studied according to the standards of game theory \cite{von1944theory,nash1950equilibrium,binmore2007playing}, combinatorics \cite{grimaldi2003discrete}, probability \cite{ross2014first,feller1968introduction}, and algorithmic complexity \cite{cormen2009introduction,sipser2012introduction}.
+
+\subsection*{Summary of Contributions}
+\label{subsec:summary_contributions}
+
+The nine chapters of this document have allowed us to establish the following elements:
+
+\begin{itemize}
+    \item \textbf{Chapter 1 - Definition and Context}: 
+    Establishing the conceptual framework of the **F5 Game**, fundamental rules, and structuring mechanisms (dealing, control, suit obligation, Cora system) in relation to the history of card games \cite{parlett1999oxford}.
+
+    \item \textbf{Chapter 2 - Formal Definitions}: 
+    Construction of a complete axiomatic system including fundamental sets (Definitions~\ref{def:values},~\ref{def:suits}), projection functions (Definitions~\ref{def:value_function},~\ref{def:suit_function}), and the structure of game states.
+
+    \item \textbf{Chapter 3 - Theorems and Proofs}: 
+    Rigorous proofs of the essential properties of the **F5 Game**, such as winner uniqueness (Theorem~\ref{theo:winner_uniqueness}) and the conservation of stakes (Theorem~\ref{theo:zero_sum}).
+
+    \item \textbf{Chapter 4 - Structural Properties}: 
+    Analysis of conditional determinism, imperfect information, and strategic asymmetries, consistent with zero-sum game theory.
+
+    \item \textbf{Chapter 5 - Advanced Probabilistic Analysis}: 
+    Study of multivariate hypergeometric distributions (Proposition~\ref{prop:hypergeometric_hand_sums}), Cora and triple 7 probabilities, and the distribution moments of a hand's sum.
+
+    \item \textbf{Chapter 6 - Balancing Analysis}: 
+    Determination of the optimal Cora multiplier (Theorem~\ref{theo:cora_multiplier}), variance analysis (Theorem~\ref{theo:cora_variance}), and entropy measurement (Proposition~\ref{prop:shannon_entropy}).
+
+    \item \textbf{Chapter 7 - Complexity Theorems}: 
+    Analysis of the game tree size (Theorem~\ref{theo:upper_bound_tree}), algorithmic complexity, and the dealing procedure.
+
+    \item \textbf{Chapter 8 - Probability Laws}: 
+    \textbf{Major contribution} of this work: the introduction and rigorous characterization of the \textbf{Kaptue-F5 Law} (Theorem~\ref{theo:kaptue_f5_law}), the first probabilistic distribution dedicated to the **F5 Game**.
+
+    \item \textbf{Chapter 9 - Exercises and Applications}: 
+    Practical application of theoretical results through complete simulations and concrete cases for 2, 3, and 4 players, including Monte Carlo approaches.
+\end{itemize}
+
+\subsection*{Scientific Scope}
+\label{subsec:scientific_scope}
+
+This formalization shows that the **F5 Game**:
+\begin{itemize}
+    \item Possesses a \textbf{finite but very large combinatorial structure}, allowing for exhaustive or probabilistic analyses.
+    \item Constitutes an \textbf{imperfect information game} with a non-trivial strategic space.
+    \item Presents an \textbf{internal mathematical equilibrium} (Zero-sum, ex-ante fairness, and controllable variance).
+    \item Offers an \textbf{ideal experimental ground} for AI (reinforcement learning), strategic optimization, and stochastic modeling.
+\end{itemize}
+
+\subsection*{Applications and Perspectives}
+\label{subsec:applications_perspectives}
+
+The mathematical formalization of the **F5 Game** paves the way for numerous applications, particularly in connection with your previous work on the **Kap Formula** \cite{guy2023hybrid}:
+
+\begin{itemize}
+    \item \textbf{Artificial Intelligence and Reinforcement Learning}: 
+    The **F5 Game** provides an ideal environment for training autonomous agents. We note the potential application of your **Kap Formula** to model sequential dependencies between rounds.
+    
+    \item \textbf{Strategic Analysis and Optimization}: 
+    The **Kaptue-F5 Law** allows for precise evaluation of risks and expected gains, facilitating the use of your \textit{sparsity-preserving feature augmentation} techniques.
+
+    \item \textbf{Massive Simulation and Stochastic Modeling}: 
+    Extension of Monte Carlo simulations to analyze the impact of rule variants, consistent with your future benchmarking plans against models like TabNet.
+
+    \item \textbf{Automated Refereeing and Software Implementation}: 
+    This formalization ensures unambiguous software implementation. We envision the development of a Python package, similar to your \textit{chained-regressor-nn}, to simulate and analyze game sessions.
+\end{itemize}
+
+\subsection*{General Conclusion}
+\label{subsec:general_conclusion}
+
+This work demonstrates that the **F5 Game**, far from being mere entertainment, possesses a deep and rigorous mathematical structure. The \textbf{Kaptue-F5 Law} constitutes an original theoretical contribution, providing a four-level hierarchical structure that combines multivariate hypergeometric distributions and non-stationary Markov processes.
+
+Thus, the **F5 Game** positions itself as a true \textbf{mathematical laboratory}, offering a rich field for research, teaching, and software engineering, while maintaining continuity with your research on hybrid systems and the Kap Formula.
+
+% ========================================
+% ORIGINALITY AND PRIOR ART OF THE F5 GAME
+% ========================================
+
+\section*{Originality and Prior Art of the F5 Game}
+\label{sec:originality_prior_art}
+\addcontentsline{toc}{section}{Originality and Prior Art}
+
+The **F5 Game** (KSZ Five-Five Card Model), as defined in this document, constitutes an original creation based on a unique combination of ludic, structural, and mathematical mechanisms. \textbf{To the author's knowledge, no prior work provides a complete axiomatic and probabilistic formalization of a fixed five-round card game with multiplicative payoff dynamics.} No description in the classical literature of card games \cite{parlett1999oxford} or game theory \cite{von1944theory,binmore2007playing} simultaneously presents:
+
+\begin{itemize}[leftmargin=*]
+    \item A reduced 32-card deck (values 3 to 10) with vernacular suit names (Zin, Tchaka, Coubi, Black).
+    \item A double immediate victory condition ($\Sigma(h)\leq 21$ or triple 7).
+    \item Dynamic suit control based on the previous round's victory.
+    \item A multiplier system (Cora, Double Cora) centered on the value 3.
+    \item A two-phase distribution (3+2 cards) after an optional cut.
+    \item A strict penalty for failing to follow the suit obligation.
+    \item A complete mathematical formalization including axiomatic definitions, proofs, and the original hierarchical model (\textbf{Kaptue-F5 Law}).
+\end{itemize}
+
+This formalization constitutes a \textbf{dated proof of prior art}, establishing your authorship of:
+\begin{itemize}
+    \item The structure and rules of the **F5 Game**.
+    \item The **Kaptue-F5 Law** as an original probabilistic model.
+    \item The application of your methods (Kap Formula) to the analysis of sequential games.
+\end{itemize}
+
+\vspace{1cm}
+\begin{center}
+\textbf{Document validated by Guy Kaptue — January 2026}\\
+\textit{Full Formalization of the F5 Game (KSZ Five-Five Card Model)}\\
+\textit{guykaptue24@gmail.com}
+\end{center}

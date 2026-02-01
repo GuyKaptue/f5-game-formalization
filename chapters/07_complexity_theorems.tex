@@ -1,0 +1,161 @@
+% ========================================
+% CHAPTER 7: COMPLEXITY THEOREMS OF THE F5 GAME
+% ========================================
+
+\section{Complexity Theorems of the \textbf{F5 Game}}
+\label{chap:complexity_theorems}
+
+This chapter analyzes the structural and algorithmic complexity of the \textbf{F5 Game}. We successively study:
+(1) the size of the game tree,
+(2) the temporal and spatial complexity of a complete simulation,
+(3) the complexity of the dealing procedure.
+
+% ========================================
+\subsection{Game Tree Complexity}
+\label{subsec:game_tree_complexity}
+
+\begin{theorembox}{Upper bound on game tree size}{theo:upper_bound_tree}
+\label{theo:upper_bound_tree}
+We define the maximum number of nodes in the game tree as being upper-bounded by:
+\[
+N_{\text{nodes}} \leq 4^5 \times (5!)^n.
+\]
+\end{theorembox}
+
+\begin{proof}
+At each round $r$:
+\begin{itemize}
+    \item the controller chooses a suit from 4 options;
+    \item each player has $(6-r)$ remaining cards, thus at most $(6-r)$ choices.
+\end{itemize}
+
+Over 5 rounds:
+\[
+4^5 = 1024
+\]
+
+and each player performs a permutation of their 5 cards:
+\[
+5! = 120.
+\]
+
+For $n$ players:
+\[
+N_{\text{nodes}} \leq 1024 \times (120)^n.
+\]
+
+For $n=4$:
+\[
+N_{\text{nodes}} \leq 1024 \times 120^4 \approx 2.12 \times 10^{11}.
+\]
+\end{proof}
+
+\begin{theorembox}{Tree depth}{theo:tree_depth}
+\label{theo:tree_depth}
+The depth of the game tree is exactly:
+\[
+d = R = 5.
+\]
+\end{theorembox}
+
+\begin{proof}
+A game consists of exactly 5 rounds, each corresponding to a decision level.
+No additional branching is possible: we therefore conclude that the depth is strictly equal to 5.
+\end{proof}
+
+% ========================================
+\subsection{Algorithmic Complexity}
+\label{subsec:algorithmic_complexity}
+
+\begin{theorembox}{Time complexity of a full simulation}{theo:time_complexity_simulation}
+\label{theo:time_complexity_simulation}
+The time complexity for a complete simulation of a game session is:
+\[
+\mathcal{O}(n \times R) = \mathcal{O}(5n).
+\]
+\end{theorembox}
+
+\begin{proof}
+In each round:
+\begin{itemize}
+    \item choice of suit: $\mathcal{O}(1)$;
+    \item cards played by $n$ players: $\mathcal{O}(n)$;
+    \item winner determination: $\mathcal{O}(n)$.
+\end{itemize}
+
+Thus, one round costs $\mathcal{O}(n)$, and for $R=5$ rounds:
+\[
+\mathcal{O}(n) \times 5 = \mathcal{O}(5n).
+\]
+\end{proof}
+
+\begin{theorembox}{Space complexity}{theo:space_complexity}
+\label{theo:space_complexity}
+For fixed deck size $|D| = 32$ and fixed maximum number of players $n \leq 4$, the space complexity required to store a game state is:
+\[
+\mathcal{O}(1).
+\]
+\end{theorembox}
+
+\begin{proof}
+A state contains:
+\[
+G(t) = (H(t), r(t), c(t), s_r, P(t), \sigma, \text{direction}, d, M_0, \text{Disq}(t)).
+\]
+
+All these objects have a size bounded by constants independent of the input, as both $n \leq 4$ and $|D| = 32$ are fixed constants.
+The required memory is therefore constant.
+\end{proof}
+
+% ========================================
+\subsection{Complexity of the Dealing Procedure}
+\label{subsec:dealing_complexity}
+
+\begin{theorembox}{Complexity of the dealing procedure}{theo:dealing_complexity}
+\label{theo:dealing_complexity}
+For fixed deck size $|D| = 32$, the time complexity of the complete dealing procedure (shuffling, cutting, distribution) is \cite{cormen2009introduction, sipser2012introduction, fisher1934randomisation}:
+\[
+\mathcal{O}(|D| \log |D|) = \mathcal{O}(32 \log 32) = \mathcal{O}(1).
+\]
+\end{theorembox}
+
+\begin{proof}
+\begin{itemize}
+    \item Shuffling (Fisher-Yates): $\mathcal{O}(32)$;
+    \item Cutting: $\mathcal{O}(1)$;
+    \item Distribution: $\mathcal{O}(5n) = \mathcal{O}(20)$.
+\end{itemize}
+
+Thus, the total complexity is:
+\[
+\mathcal{O}(32 + 1 + 20) = \mathcal{O}(32) = \mathcal{O}(1).
+\]
+
+Since the deck size is fixed at 32 cards, all operations require constant time.
+\end{proof}
+
+\begin{notebox}{Constant complexity of dealing}{note:constant_dealing_complexity}
+\label{note:constant_dealing_complexity}
+We observe that the distribution is asymptotically constant (for fixed deck size), which allows for the implementation of massive game simulations without significant algorithmic overhead.
+\end{notebox}
+
+\begin{theorembox}{Controlled algorithmic complexity}{theo:complexity_summary}
+\label{theo:complexity_summary}
+The \textbf{F5 Game} possesses controlled algorithmic complexity in the following sense:
+\begin{enumerate}
+    \item the depth of the game tree is constant ($R=5$);
+    \item the time complexity of a full simulation is linear with respect to the number of players: $\mathcal{O}(5n)$;
+    \item the space complexity of a game state is constant (for fixed deck size): $\mathcal{O}(1)$;
+    \item the dealing procedure has an asymptotically constant complexity (for fixed deck size).
+\end{enumerate}
+\end{theorembox}
+
+\begin{proof}
+\begin{enumerate}
+    \item Follows from Theorem~\ref{theo:tree_depth}.
+    \item Follows from Theorem~\ref{theo:time_complexity_simulation}.
+    \item Follows from Theorem~\ref{theo:space_complexity}.
+    \item Follows from Theorem~\ref{theo:dealing_complexity}.
+\end{enumerate}
+Thus, all essential components of the game have bounded or linear complexity, ensuring full control over the algorithmic cost.
+\end{proof}

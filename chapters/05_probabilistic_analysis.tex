@@ -1,0 +1,236 @@
+% ========================================
+% CHAPTER 5: ADVANCED PROBABILISTIC ANALYSIS
+% ========================================
+
+\section{Advanced Probabilistic Analysis of the \textbf{F5 Game}}
+\label{chap:probabilistic_analysis}
+
+This chapter studies the probabilistic properties of the \textbf{F5 Game}, specifically the distribution of hand values, the probabilities associated with rare events (Cora, triple 7) \cite{ross2014first}, and the combinatorial structures underlying card distribution.
+
+% ========================================
+\subsection{Distribution of the Hand Sum}
+\label{subsec:sum_distribution}
+
+\begin{theorembox}{Expectation of the hand sum}{theo:sum_expectation}
+\label{theo:sum_expectation}
+For a random hand $h$ of five cards drawn without replacement from the full deck, we find that the expected sum is:
+\[
+\mathbb{E}[\Sigma(h)] = 5 \cdot \mu_V = 32.5.
+\]
+\end{theorembox}
+
+\begin{proof}
+By the linearity of expectation:
+\[
+\mathbb{E}[\Sigma(h)]
+= \mathbb{E}\left[\sum_{i=1}^{5} \text{val}(c_i)\right]
+= \sum_{i=1}^{5} \mathbb{E}[\text{val}(c_i)].
+\]
+Each card possesses the same marginal distribution (sampling without replacement):
+\[
+\mathbb{E}[\text{val}(c_i)] = \mu_V = 6.5.
+\]
+Hence:
+\[
+\mathbb{E}[\Sigma(h)] = 5 \times 6.5 = 32.5.
+\]
+\end{proof}
+
+\begin{theorembox}{Variance of the sum}{theo:sum_variance}
+\label{theo:sum_variance}
+The variance of the sum of a five-card hand drawn without replacement is \cite{feller1968introduction}:
+\[
+\mathrm{Var}[\Sigma(h)]
+= 5 \cdot \sigma_V^2 \cdot \frac{N - 5}{N - 1}
+\approx 22.86,
+\]
+where $N = 32$ and $\sigma_V^2 = 5.25$.
+\end{theorembox}
+
+\begin{proof}[Sketch]
+For a sample of size $n$ drawn without replacement from a population of size $N$:
+\[
+\mathrm{Var}[S_n] = n \cdot \sigma^2 \cdot \frac{N-n}{N-1}.
+\]
+We apply this directly with $n=5$, $N=32$, and $\sigma^2 = 5.25$:
+\[
+\mathrm{Var}[\Sigma(h)] = 5 \cdot 5.25 \cdot \frac{27}{31} \approx 22.86.
+\]
+\end{proof}
+
+\begin{propositionbox}{Hypergeometric distribution of hand sums}{prop:hypergeometric_hand_sums}
+\label{prop:hypergeometric_hand_sums}
+The distribution of hand sums $\Sigma(h)$ arises from a convolution of hypergeometric distributions over the value multiset. For any specific hand configuration, the probability depends on the multivariate hypergeometric law governing the selection of cards without replacement.
+\end{propositionbox}
+
+% ========================================
+\subsection{Combinatorics of Distributions}
+\label{subsec:distribution_combinatorics}
+
+\begin{theorembox}{Total number of distributions}{theo:nb_distributions}
+\label{theo:nb_distributions}
+The total number of possible distributions for $n$ players, each receiving five cards, is \cite{ross2014first}:
+\[
+N_{\mathrm{dist}}(n)
+= \frac{32!}{(5!)^n \, (32 - 5n)!}.
+\]
+\end{theorembox}
+
+\begin{proof}
+We consider a sequential distribution:
+\[
+\binom{32}{5},\quad
+\binom{27}{5},\quad
+\ldots,\quad
+\binom{32 - 5(n-1)}{5}.
+\]
+The product is written as:
+\[
+\prod_{k=0}^{n-1} \binom{32 - 5k}{5}
+= \frac{32!}{(5!)^n (32 - 5n)!}.
+\]
+\end{proof}
+
+\begin{exemplebox}{Orders of magnitude}{ex:magnitude_orders}
+\label{ex:magnitude_orders}
+\begin{itemize}
+    \item $n=2$: $N_{\mathrm{dist}}(2) = 658,008,000$
+    \item $n=3$: $N_{\mathrm{dist}}(3) \approx 2.25 \times 10^{11}$
+    \item $n=4$: $N_{\mathrm{dist}}(4) \approx 2.76 \times 10^{14}$
+\end{itemize}
+\end{exemplebox}
+
+% ========================================
+\subsection{Cora Probability}
+\label{subsec:cora_probability}
+
+\begin{propositionbox}{Hypergeometric distribution of value 3 cards}{prop:distribution_3}
+\label{prop:distribution_3}
+The probability of receiving exactly $k$ cards of value 3 follows a hypergeometric distribution (sampling without replacement):
+\[
+P(X = k)
+= \frac{\binom{4}{k} \binom{28}{5-k}}{\binom{32}{5}},
+\qquad k \in \{0,1,2,3,4\}.
+\]
+\end{propositionbox}
+
+\begin{proof}
+This is a direct application of the hypergeometric distribution: there are 4 cards of value 3 in the deck of 32 cards, and we draw 5 cards without replacement.
+\end{proof}
+
+\begin{exemplebox}{Numerical values}{ex:numerical_values_3}
+\label{ex:numerical_values_3}
+\[
+\begin{aligned}
+P(X=0) &\approx 0.488,\\
+P(X=1) &\approx 0.411,\\
+P(X=2) &\approx 0.095,\\
+P(X=3) &\approx 0.006,\\
+P(X=4) &\approx 0.0001.
+\end{aligned}
+\]
+\end{exemplebox}
+
+% ========================================
+\subsection{Probability of Immediate Victory by Triple 7}
+\label{subsec:triple7_probability}
+
+\begin{propositionbox}{Distribution of value 7 cards}{prop:distribution_7}
+\label{prop:distribution_7}
+Let $Y$ be the number of value 7 cards in a hand (sampling without replacement):
+\[
+P(Y = k)
+= \frac{\binom{4}{k} \binom{28}{5-k}}{\binom{32}{5}},
+\qquad k \in \{0,1,2,3,4\}.
+\]
+\end{propositionbox}
+
+\begin{propositionbox}{Probability of Triple 7}{prop:triple7_probability}
+\label{prop:triple7_probability}
+The probability of obtaining exactly three cards of value 7 is:
+\[
+P(Y = 3)
+= \frac{\binom{4}{3} \binom{28}{2}}{\binom{32}{5}}
+\approx 0.00751.
+\]
+\end{propositionbox}
+
+\begin{proof}
+We note that:
+\[
+\binom{4}{3} = 4,\qquad
+\binom{28}{2} = 378,\qquad
+\binom{32}{5} = 201376.
+\]
+Thus:
+\[
+P(Y=3) = \frac{4 \cdot 378}{201376}
+= \frac{1512}{201376}
+\approx 0.00751.
+\]
+\end{proof}
+
+\begin{notebox}{Rarity of Triple 7}{note:triple7_rarity}
+\label{note:triple7_rarity}
+We observe that the "triple 7" condition is approximately \textbf{13 times rarer} than the $\Sigma(h)\leq 21$ condition, but it remains observable over long sessions.
+\end{notebox}
+
+\begin{propositionbox}{Expected number of Triple 7s over $T$ games}{prop:triple7_expectation}
+\label{prop:triple7_expectation}
+\[
+\mathbb{E}[\text{Triple 7}] = T \cdot P(Y = 3).
+\]
+\end{propositionbox}
+
+\begin{exemplebox}{Practical case}{ex:triple7_practical_case}
+\label{ex:triple7_practical_case}
+For $T = 100$ games:
+\[
+\mathbb{E}[\text{Triple 7}] \approx 0.75.
+\]
+We therefore expect to see a triple 7 on average every $\approx 133$ games.
+\end{exemplebox}
+
+% ========================================
+\subsection{Combined Probability of Immediate Victory}
+\label{subsec:combined_victory_probability}
+
+\begin{theorembox}{Total probability of immediate victory}{theo:total_victory_probability}
+\label{theo:total_victory_probability}
+\[
+P(\text{Immediate Victory})
+= P(\Sigma(h)\leq 21)
++ P(Y=3)
+- P(\Sigma(h)\leq 21 \cap Y=3).
+\]
+\end{theorembox}
+
+\begin{notebox}{Intersection of events}{note:victory_intersection}
+\label{note:victory_intersection}
+We recognize that the two events are not disjoint: a hand containing three 7s and two very weak cards could satisfy both conditions.
+However, we show that this intersection is theoretically zero.
+\end{notebox}
+
+\begin{propositionbox}{Null intersection}{prop:null_intersection}
+\label{prop:null_intersection}
+\[
+P(\Sigma(h)\leq 21 \cap Y=3) = 0.
+\]
+\end{propositionbox}
+
+\begin{proof}
+Three cards of value 7 already sum to 21.
+The two remaining cards would need to have a sum $\leq 0$ to satisfy $\Sigma(h)\leq 21$, which we know is impossible.
+\end{proof}
+
+\begin{corollairebox}{Simplified total probability}{cor:simplified_victory_probability}
+\label{cor:simplified_victory_probability}
+\[
+P(\text{Immediate Victory})
+\approx P(\Sigma(h)\leq 21) + 0.75\%.
+\]
+If we estimate $P(\Sigma(h)\leq 21)\approx 1\%$, then:
+\[
+P(\text{Immediate Victory}) \approx 1.75\%.
+\]
+\end{corollairebox}

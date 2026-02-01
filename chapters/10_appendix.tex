@@ -1,0 +1,480 @@
+% ========================================
+\section*{Appendix of the \textbf{F5 Game}}
+\label{app:appendix}
+\addcontentsline{toc}{section}{Appendix of the F5 Game}
+
+In this appendix, we compile the \textbf{notations} (\ref{app:notations}), \textbf{summary tables} (\ref{app:tables}), \textbf{condensed rules} (\ref{app:rules}), \textbf{technical elements} (\ref{app:technical}), as well as the \textbf{detailed proofs} and \textbf{additional theorems} used in the main text. Our results are based on the following classical references:
+\cite{ross2014first,feller1968introduction,grimaldi2003discrete,shannon1948mathematical,norris1998markov,von1944theory,binmore2007playing,cormen2009introduction,sipser2012introduction}.
+
+% ========================================
+\section{Table of Notations}
+\label{app:notations}
+
+\begin{table}[H]
+\centering
+\caption{Table of main notations for the \textbf{F5 Game}}
+\label{tab:notations_principales}
+\begin{tabular}{ll}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} \\
+\midrule
+$V$ & Set of card values (Definition~\ref{def:values}) \\
+$S$ & Set of suits (Definition~\ref{def:suits}) \\
+$\mathcal{C}$ & Space of cards $V \times S$ (Definition~\ref{def:card_space}) \\
+$D$ & Complete deck of 32 cards \\
+$\mathcal{N}$ & Set of players (Definition~\ref{def:players}) \\
+$h_i$ & Hand of player $i$ (Definition~\ref{def:player_hand}) \\
+$\Sigma(h)$ & Sum of values in a hand (Definition~\ref{def:hand_sum}) \\
+$\text{val}(c)$ & Value function (Definition~\ref{def:value_function}) \\
+$\text{col}(c)$ & Suit function (Definition~\ref{def:suit_function}) \\
+$R$ & Total number of rounds (5) (Definition~\ref{def:nb_rounds}) \\
+$s_r$ & Suit requested in round $r$ \\
+$P(r)$ & Cards played in round $r$ \\
+$\mathcal{S}_{i,r}$ & Compatibility set (Definition~\ref{def:compatibility_set}) \\
+$\mathcal{V}_r$ & Valid cards for victory (Definition~\ref{def:valid_cards}) \\
+$w(r)$ & Winner of round $r$ (Definition~\ref{def:winner_function}) \\
+$M_0$ & Initial stake \\
+$\delta_i$ & Gain of player $i$ \\
+$\Delta$ & Vector of gains (Definition~\ref{def:payoff_vector}) \\
+$d$ & Dealer (Definition~\ref{def:dealer}) \\
+$\sigma$ & Circular permutation \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ========================================
+\section{Summary Tables}
+\label{app:tables}
+
+\subsection{Useful Probabilities for Strategic Analysis}
+\label{app:probabilities}
+
+\begin{table}[H]
+\centering
+\caption{Strategic probabilities of the \textbf{F5 Game}}
+\label{tab:probabilites_strategiques}
+\begin{tabular}{lll}
+\toprule
+\textbf{Event} & \textbf{Probability} & \textbf{Reference} \\
+\midrule
+At least one 3 & $\approx 0.512$ & Theorem~\ref{theo:prob_3} \\
+Two cards of value 3 & $\approx 0.0976$ & Proposition~\ref{prop:variance_Xv} \\
+Triple 7 & $\approx 0.00751$ & Proposition~\ref{prop:triple7_probability} \\
+Sum $\leq 21$ & $\approx 0.5\%-2\%$ & Theorem~\ref{theo:light_hands} \\
+Total immediate victory & $\approx 1.75\%$ & Corollary~\ref{cor:simplified_victory_probability} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Gain Multipliers}
+\label{app:multipliers}
+
+\begin{table}[H]
+\centering
+\caption{Gain system of the \textbf{F5 Game}}
+\label{tab:multiplicateurs_gains}
+\begin{tabular}{lll}
+\toprule
+\textbf{Victory Type} & \textbf{Multiplier} & \textbf{Gain} \\
+\midrule
+Standard victory & $1$ & $(n-1)M_0$ (Definition~\ref{def:standard_gain}) \\
+Simple Cora & $2$ & $2(n-1)M_0$ (Definition~\ref{def:simple_cora}) \\
+Double Cora & $4$ & $4(n-1)M_0$ (Definition~\ref{def:double_cora}) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ========================================
+\section{Condensed Rules Sheet of the \textbf{F5 Game}}
+\label{app:rules}
+
+\begin{tcolorbox}[
+    colback=gray!5,
+    colframe=gray!60,
+    title=Condensed Rules Sheet of the \textbf{F5 Game},
+    fonttitle=\bfseries,
+    sharp corners,
+    breakable,
+    label=box:regles_condensees
+]
+\subsection*{Material and Participants}
+\begin{itemize}
+    \item \textbf{Deck}: 32 cards (values 3 to 10, 4 suits)
+    \item \textbf{Players}: $n \in \{2,3,4\}$ (Definition~\ref{def:players})
+    \item \textbf{Initial stake}: $M_0 \in \mathbb{R}^+$ (Definition~\ref{def:initial_stake})
+    \item \textbf{Duration}: 5 rounds (Definition~\ref{def:nb_rounds})
+\end{itemize}
+
+\subsection*{Game Objective}
+Win the \textbf{5th round} or satisfy an immediate victory condition:
+\begin{itemize}
+    \item $\Sigma(h) \leq 21$ (Theorem~\ref{theo:minimal_sum})
+    \item Triple 7 (Proposition~\ref{prop:triple7_victory})
+\end{itemize}
+
+\subsection*{Gameplay}
+\begin{enumerate}
+    \item Designate the dealer (Definition~\ref{def:dealer})
+    \item Choose the direction of play (Definition~\ref{def:play_direction})
+    \item Shuffle and optional cut
+    \item Deal 3+2 cards (Definition~\ref{def:dealing_procedure})
+    \item Check immediate victory conditions
+    \item 5 successive rounds with suit obligation (Definition~\ref{def:compatibility_set})
+    \item Final payment according to the Cora system (Definitions~\ref{def:simple_cora},~\ref{def:double_cora})
+\end{enumerate}
+
+\subsection*{Special Rules}
+\begin{itemize}
+    \item \textbf{Suit obligation}: Penalized fault (Proposition~\ref{prop:unique_max_value})
+    \item \textbf{Cora system}: Gain multipliers (Theorem~\ref{theo:cora_multiplier})
+    \item \textbf{Immediate victory}: Specific conditions (Proposition~\ref{prop:triple7_victory})
+\end{itemize}
+\end{tcolorbox}
+
+% ========================================
+\section{Technical Appendix: Structure of the \textbf{F5 Game}}
+\label{app:technical}
+
+\begin{tcolorbox}[
+    colback=blue!5,
+    colframe=blue!60,
+    title=Technical Structure of the \textbf{F5 Game},
+    fonttitle=\bfseries,
+    sharp corners,
+    breakable,
+    label=box:structure_technique
+]
+\subsection*{Algorithmic Complexity}
+\begin{itemize}
+    \item \textbf{Tree depth}: 5 rounds (Theorem~\ref{theo:tree_depth})
+    \item \textbf{Maximum size}: $\leq 2.12 \times 10^{11}$ nodes (Theorem~\ref{theo:upper_bound_tree})
+    \item \textbf{Time complexity}: $\mathcal{O}(5n)$ (Theorem~\ref{theo:time_complexity_simulation})
+    \item \textbf{Space complexity}: $\mathcal{O}(1)$ (Theorem~\ref{theo:space_complexity})
+\end{itemize}
+
+\subsection*{Combinatorial Distributions}
+\begin{itemize}
+    \item Number of distributions: $N_{\text{dist}}(n) = \frac{32!}{(5!)^n (32-5n)!}$ (Theorem~\ref{theo:nb_distributions})
+    \item Hypergeometric probability: $P(X=k) = \frac{\binom{4}{k}\binom{28}{5-k}}{\binom{32}{5}}$ (Theorem~\ref{theo:hypergeometric_law})
+    \item Triple 7 probability: $P(Y=3) \approx 0.00751$ (Proposition~\ref{prop:triple7_probability})
+\end{itemize}
+
+\subsection*{Fundamental Mathematical Properties}
+\begin{itemize}
+    \item \textbf{Expectation}: $\mathbb{E}[\Sigma(h)] = 32.5$ (Theorem~\ref{theo:moments_f5_distribution})
+    \item \textbf{Variance}: $\mathrm{Var}[\Sigma(h)] \approx 22.86$ (Theorem~\ref{theo:moments_f5_distribution})
+    \item \textbf{Entropy}: $H(h) \approx 17.62$ bits (Theorem~\ref{theo:shannon_entropy})
+\end{itemize}
+\end{tcolorbox}
+
+% ========================================
+\section{Appendix A — Additional Proofs}
+\label{app:proofs}
+
+\subsection{Uniformity of Configurations}
+\label{app:uniformity}
+
+\begin{tcolorbox}[
+    colback=blue!5,
+    colframe=blue!70,
+    title=Theorem: Uniformity of initial configurations,
+    fonttitle=\bfseries,
+    sharp corners,
+    breakable,
+    label=theo:uniformity_configurations
+]
+Any configuration $(h_1,\ldots,h_n)$ of distributed hands is equiprobable.
+\end{tcolorbox}
+
+\begin{proof}
+The shuffle of the deck is a uniform permutation of $S_{32}$ (Proposition~\ref{prop:conditional_determinism}).
+The sequential distribution is a deterministic application:
+\[
+\phi : S_{32} \to \mathcal{H}_1 \times \cdots \times \mathcal{H}_n.
+\]
+By invariance of the uniform measure under permutation \cite{grimaldi2003discrete}, the direct image of the uniform measure by $\phi$ is uniform over the space of configurations.
+\end{proof}
+
+\subsection{Multivariate Hypergeometric Law}
+\label{app:hypergeometric}
+
+\begin{tcolorbox}[
+    colback=blue!5,
+    colframe=blue!70,
+    title=Theorem: Multivariate hypergeometric law of hands,
+    fonttitle=\bfseries,
+    sharp corners,
+    breakable,
+    label=theo:loi_hypergeometrique_multivariatee
+]
+The draw of a hand follows a multivariate hypergeometric law.
+\end{tcolorbox}
+
+\begin{proof}
+See complete demonstration in Theorem~\ref{theo:hypergeometric_law} (page~\pageref{theo:hypergeometric_law}).
+\end{proof}
+
+\subsection{Markov Property of Rounds}
+\label{app:markov_property}
+
+\begin{tcolorbox}[
+    colback=blue!5,
+    colframe=blue!70,
+    title=Theorem: Markovianity of rounds,
+    fonttitle=\bfseries,
+    sharp corners,
+    breakable,
+    label=theo:markovianite_rounds
+]
+The process $(S(r))_{r=1}^5$ is Markovian.
+\end{tcolorbox}
+
+\begin{proof}
+See complete demonstration in Theorem~\ref{theo:markov_property} (page~\pageref{theo:markov_property}).
+\end{proof}
+
+\subsection{Conservation of the Sum of Gains}
+\label{app:gains_conservation}
+
+\begin{tcolorbox}[
+    colback=blue!5,
+    colframe=blue!70,
+    title=Theorem: Conservation of the sum of gains,
+    fonttitle=\bfseries,
+    sharp corners,
+    breakable,
+    label=theo:conservation_gains
+]
+For any game, $\sum_{i=1}^n \delta_i = 0$.
+\end{tcolorbox}
+
+\begin{proof}
+See complete demonstration in Theorem~\ref{theo:zero_sum} (page~\pageref{theo:zero_sum}).
+\end{proof}
+
+% ========================================
+\section{Appendix B — Probability Theorems Used}
+\label{app:probability_theorems}
+
+\subsection{Strong Law of Large Numbers}
+\label{app:slln}
+
+\begin{tcolorbox}[
+    colback=green!5,
+    colframe=green!70,
+    title=Theorem: Strong law of large numbers,
+    fonttitle=\bfseries,
+    sharp corners,
+    breakable,
+    label=theo:loi_forte_grands_nombres
+]
+See \cite[Ch.~8]{ross2014first}.
+\end{tcolorbox}
+
+\subsection{Central Limit Theorem}
+\label{app:clt}
+
+\begin{tcolorbox}[
+    colback=green!5,
+    colframe=green!70,
+    title=Theorem: Central limit theorem,
+    fonttitle=\bfseries,
+    sharp corners,
+    breakable,
+    label=theo:theoreme_limite_central
+]
+See \cite{feller1968introduction}.
+\end{tcolorbox}
+
+\subsection{Shannon Entropy}
+\label{app:entropy}
+
+\begin{tcolorbox}[
+    colback=green!5,
+    colframe=green!70,
+    title=Definition: Shannon entropy,
+    fonttitle=\bfseries,
+    sharp corners,
+    breakable,
+    label=def:shannon_entropy
+]
+$H(X) = -\sum_x P(x)\log_2 P(x)$ \cite{shannon1948mathematical}.
+\end{tcolorbox}
+
+% ========================================
+\section{Appendix C — Combinatorial Theorems}
+\label{app:combinatorial}
+
+\begin{tcolorbox}[
+    colback=yellow!5,
+    colframe=yellow!70,
+    title=Fundamental combinatorial references,
+    fonttitle=\bfseries,
+    sharp corners,
+    breakable,
+    label=box:references_combinatoires
+]
+The combinatorial results used in this work come mainly from:
+\begin{itemize}
+    \item \cite{grimaldi2003discrete} for the foundations of distributions and permutations
+    \item \cite{feller1968introduction} for the properties of hypergeometric laws
+    \item \cite{ross2014first} for probabilistic applications to games
+\end{itemize}
+These references support the demonstrations of Theorems~\ref{theo:hypergeometric_law},~\ref{theo:nb_distributions}, and~\ref{theo:moments_f5_distribution}.
+\end{tcolorbox}
+
+% ========================================
+\section{Appendix D — Markov Chain Theory}
+\label{app:markov_theory}
+
+\begin{tcolorbox}[
+    colback=cyan!5,
+    colframe=cyan!70,
+    title=Markovian foundations of the \textbf{F5 Game},
+    fonttitle=\bfseries,
+    sharp corners,
+    breakable,
+    label=box:fondements_markoviens
+]
+The Markovian properties of the \textbf{F5 Game} are based on:
+\begin{itemize}
+    \item \cite{norris1998markov} for the formal definition of Markov chains
+    \item Theorem~\ref{theo:markov_property} for the specific demonstration of the game
+    \item Proposition~\ref{prop:non_stationarity} for the analysis of non-stationarity
+\end{itemize}
+These elements are crucial for understanding the sequential dynamics of the game (Section~\ref{sec:probability_laws}).
+\end{tcolorbox}
+
+% ========================================
+\section{Appendix E — Sequential Game Theory}
+\label{app:sequential_games}
+
+\begin{tcolorbox}[
+    colback=purple!5,
+    colframe=purple!70,
+    title=Theoretical framework of sequential games,
+    fonttitle=\bfseries,
+    sharp corners,
+    breakable,
+    label=box:cadre_jeux_sequentiels
+]
+The results used come from the foundational works:
+\begin{itemize}
+    \item \cite{von1944theory} for the general theory of zero-sum games
+    \item \cite{binmore2007playing} for applications to sequential games
+    \item Theorem~\ref{theo:representation_sequential_games} for the specific modeling of the \textbf{F5 Game}
+\end{itemize}
+These references support the structural analysis presented in Section~\ref{sec:probability_laws}.
+\end{tcolorbox}
+
+% ========================================
+\section{Appendix F — Hierarchical Model: Kaptue-F5 Law}
+\label{app:kaptue_F5_law}
+
+\begin{tcolorbox}[
+    colback=orange!5,
+    colframe=orange!70,
+    title=Hierarchical model of the \textbf{F5 Game},
+    fonttitle=\bfseries,
+    sharp corners,
+    breakable,
+    label=theo:modele_hierarchique_f5
+]
+Any finite sequential game with perfect or imperfect information, with discrete states, can be represented by a joint law of the form
+\[
+P(\Delta, W, R, H) = P(\Delta \mid W,H)\,P(W \mid R,H)\,P(R \mid H)\,P(H),
+\]
+i.e., as an abstract instance of the Kaptue-F5 Law applied to the \textbf{F5 Game}.
+\end{tcolorbox}
+
+\begin{proof}
+See complete demonstration in Theorem~\ref{theo:hierarchical_decomposition} (page~\pageref{theo:hierarchical_decomposition}) and Theorem~\ref{theo:universality_card_games} (page~\pageref{theo:universality_card_games}).
+\end{proof}
+
+% ========================================
+\section{Appendix G — Asymptotic Results}
+\label{app:asymptotic}
+
+\begin{tcolorbox}[
+    colback=red!5,
+    colframe=red!70,
+    title=Asymptotic behavior of the \textbf{F5 Game},
+    fonttitle=\bfseries,
+    sharp corners,
+    breakable,
+    label=box:resultats_asymptotiques
+]
+The key asymptotic results include:
+\begin{itemize}
+    \item \textbf{Strong law of large numbers} (Theorem~\ref{theo:strong_law_large_numbers})
+    \item \textbf{Central limit theorem} (Theorem~\ref{theo:central_limit_theorem})
+    \item \textbf{Convergence of Monte Carlo estimators} (Proposition~\ref{prop:monte_carlo_estimation})
+\end{itemize}
+These properties are essential for:
+\begin{itemize}
+    \item Statistical analysis of game series (Section~\ref{sec:probability_laws})
+    \item Empirical validation of theoretical probabilities (Example~\ref{ex:numerical_simulation})
+    \item Estimation of game parameters (Exercise~\ref{ex:monte_carlo_estimation})
+\end{itemize}
+\end{tcolorbox}
+
+% ========================================
+\section{Appendix H — Algorithmic Complexity}
+\label{app:complexity}
+
+\begin{tcolorbox}[
+    colback=black!5,
+    colframe=black!70,
+    title=Complexity analysis of the \textbf{F5 Game},
+    fonttitle=\bfseries,
+    text width=0.95\linewidth,
+    sharp corners,
+    breakable,
+    label=box:analyse_complexite
+]
+The complexity results come from:
+\begin{itemize}
+    \item \cite{cormen2009introduction} for general algorithmic analysis
+    \item \cite{sipser2012introduction} for theoretical foundations
+    \item Theorem~\ref{theo:upper_bound_tree} for the size of the game tree
+    \item Theorem~\ref{theo:time_complexity_simulation} for time complexity
+    \item Theorem~\ref{theo:space_complexity} for space complexity
+\end{itemize}
+
+\textbf{Practical Implications}:
+\begin{itemize}
+    \item The constant complexity of distribution (Theorem~\ref{theo:dealing_complexity}) allows for massive simulations
+    \item The fixed depth of 5 rounds (Theorem~\ref{theo:tree_depth}) facilitates the implementation of search algorithms
+    \item The constant space complexity (Theorem~\ref{theo:space_complexity}) allows for memory-efficient implementation
+\end{itemize}
+\end{tcolorbox}
+
+% ========================================
+\section{Appendix I — Extensions and Future Work}
+\label{app:extensions}
+
+\begin{tcolorbox}[
+    colback=green!10,
+    colframe=green!80,
+    title=Research perspectives on the \textbf{F5 Game},
+    fonttitle=\bfseries,
+    sharp corners,
+    breakable,
+    label=box:perspectives_recherche
+]
+Several future research directions emerge from this formalization:
+
+\subsection*{Theoretical Extensions}
+\begin{itemize}
+    \item \textbf{Generalization to $n$ rounds}: Extend Markovian properties (Theorem~\ref{theo:markov_property}) to a variable number of rounds
+    \item \textbf{Partial information games}: Adapt the Kaptue-F5 Law (Section~\ref{app:kaptue_F5_law}) to games with hidden information
+    \item \textbf{Cora system variants}: Analyze the impact of variable multipliers on game balancing (Theorem~\ref{theo:cora_multiplier})
+\end{itemize}
+
+\subsection*{Practical Applications}
+\begin{itemize}
+    \item \textbf{Computer implementation}: Develop a simulator based on complexity properties (Section~\ref{app:complexity})
+    \item \textbf{Strategic optimization}: Use calculated probabilities (Section~\ref{app:probabilities}) to develop AIs
+    \item \textbf{Benchmarking}: Compare the \textbf{F5 Game} with other formalized card games
+\end{itemize}
+\end{tcolorbox}

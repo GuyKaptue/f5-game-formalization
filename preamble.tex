@@ -1,0 +1,269 @@
+% ========================================
+% PREAMBLE — KSZ CARD MODEL PRIVATE RESEARCH
+% ========================================
+
+% ----------------------------------------
+% ENCODING & LANGUAGE
+% ----------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel} % Switched to English
+
+% ----------------------------------------
+% TYPOGRAPHY & MICRO-TYPO
+% ----------------------------------------
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% ----------------------------------------
+% MATHEMATICAL PACKAGES
+% ----------------------------------------
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+
+% Unicode Card Symbols → math-safe versions
+\DeclareUnicodeCharacter{2665}{\ensuremath{\heartsuit}}
+\DeclareUnicodeCharacter{2666}{\ensuremath{\diamondsuit}}
+\DeclareUnicodeCharacter{2663}{\ensuremath{\clubsuit}}
+\DeclareUnicodeCharacter{2660}{\ensuremath{\spadesuit}}
+
+% ----------------------------------------
+% FIGURES, FLOATS, GRAPHICS
+% ----------------------------------------
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{tikz}
+
+% ----------------------------------------
+% PAGE LAYOUT
+% ----------------------------------------
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+% Sections on new page
+\usepackage{titlesec}
+
+\let\oldsection\section
+\renewcommand{\section}{\clearpage\oldsection}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries}
+  {\thesection}{1em}{}
+
+\titlespacing*{\section}{0pt}{*4}{*2}
+
+% ----------------------------------------
+% TABLES, LISTS, COLORS
+% ----------------------------------------
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+
+\usepackage[table]{xcolor}
+
+
+% ----------------------------------------
+% HYPERLINKS
+% ----------------------------------------
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+    pdfauthor={Guy Kaptue},
+    pdftitle={KSZ Card Model — Mathematical Formalization},
+    pdfsubject={Kaptue Sequential Zero-Sum Card Model},
+    pdfkeywords={KSZ, Five-Five, Zero-Sum, Sequential Game, Card Model}
+}
+
+% ----------------------------------------
+% HEADERS & FOOTERS
+% ----------------------------------------
+\usepackage{fancyhdr}
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{Kaptue Sequential Zero-Sum Card Model}
+
+% ----------------------------------------
+% SCIENTIFIC COLORED BLOCKS (TCOLORBOX)
+% ----------------------------------------
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems, skins, breakable}
+
+% ----- Definition -----
+\newtcbtheorem[
+  auto counter, number within=section
+]{definitionbox}{Definition}{
+  enhanced,
+  colback=yellow!8!white,
+  colframe=yellow!60!black,
+  coltitle=black,
+  fonttitle=\bfseries,
+  breakable,
+  sharp corners,
+  attach boxed title to top left={yshift=-2mm, xshift=2mm},
+  boxed title style={colback=yellow!30!white}
+}{def}
+
+% ----- Theorem -----
+\newtcbtheorem[
+  auto counter, number within=section
+]{theorembox}{Theorem}{
+  enhanced,
+  colback=blue!6!white,
+  colframe=blue!70!black,
+  coltitle=black,
+  fonttitle=\bfseries,
+  breakable,
+  sharp corners,
+  attach boxed title to top left={yshift=-2mm, xshift=2mm},
+  boxed title style={colback=blue!30!white}
+}{thm}
+
+% ----- Proposition -----
+\newtcbtheorem[
+  auto counter, number within=section
+]{propositionbox}{Proposition}{
+  enhanced,
+  colback=green!8!white,
+  colframe=green!60!black,
+  coltitle=black,
+  fonttitle=\bfseries,
+  breakable,
+  sharp corners,
+  attach boxed title to top left={yshift=-2mm, xshift=2mm},
+  boxed title style={colback=green!30!white}
+}{prop}
+
+% ----- Lemma -----
+\newtcbtheorem[
+  auto counter, number within=section
+]{lemmebox}{Lemma}{
+  enhanced,
+  colback=purple!8!white,
+  colframe=purple!60!black,
+  coltitle=black,
+  fonttitle=\bfseries,
+  breakable,
+  sharp corners,
+  attach boxed title to top left={yshift=-2mm, xshift=2mm},
+  boxed title style={colback=purple!30!white}
+}{lem}
+
+% ----- Corollary -----
+\newtcbtheorem[
+  auto counter, number within=section
+]{corollairebox}{Corollary}{
+  enhanced,
+  colback=orange!8!white,
+  colframe=orange!70!black,
+  coltitle=black,
+  fonttitle=\bfseries,
+  breakable,
+  sharp corners,
+  attach boxed title to top left={yshift=-2mm, xshift=2mm},
+  boxed title style={colback=orange!30!white}
+}{cor}
+
+% ----- Property -----
+\newtcbtheorem[
+  auto counter, number within=section
+]{proprietebox}{Property}{
+  enhanced,
+  colback=cyan!8!white,
+  colframe=cyan!60!black,
+  coltitle=black,
+  fonttitle=\bfseries,
+  breakable,
+  sharp corners,
+  attach boxed title to top left={yshift=-2mm, xshift=2mm},
+  boxed title style={colback=cyan!30!white}
+}{prop2}
+
+% ----- Example -----
+\newtcbtheorem[
+  auto counter, number within=section
+]{exemplebox}{Example}{
+  enhanced,
+  colback=gray!10!white,
+  colframe=gray!70!black,
+  coltitle=black,
+  fonttitle=\bfseries,
+  breakable,
+  sharp corners,
+  attach boxed title to top left={yshift=-2mm, xshift=2mm},
+  boxed title style={colback=gray!30!white}
+}{ex}
+
+% ----- Exercise -----
+\newtcbtheorem[
+  auto counter, number within=section
+]{exercicebox}{Exercise}{
+  enhanced,
+  colback=red!5!white,
+  colframe=red!70!black,
+  coltitle=black,
+  fonttitle=\bfseries,
+  breakable,
+  sharp corners,
+  attach boxed title to top left={yshift=-2mm, xshift=2mm},
+  boxed title style={colback=red!30!white}
+}{exo}
+
+% ----- Note -----
+\newtcbtheorem[
+  number within=section
+]{notebox}{Note}{
+  enhanced,
+  colback=blue!5!white,
+  colframe=blue!60!black,
+  coltitle=black,
+  fonttitle=\bfseries,
+  breakable,
+  sharp corners,
+  attach boxed title to top left={yshift=-2mm, xshift=2mm},
+  boxed title style={colback=blue!20!white}
+}{note}
+
+% ----- Important -----
+\newtcbtheorem[
+  number within=section
+]{importantbox}{Important}{
+  enhanced,
+  colback=red!5!white,
+  colframe=red!70!black,
+  coltitle=black,
+  fonttitle=\bfseries,
+  breakable,
+  sharp corners,
+  attach boxed title to top left={yshift=-2mm, xshift=2mm},
+  boxed title style={colback=red!20!white}
+}{important}
+
+% ----- Remark -----
+\newtcbtheorem[
+  number within=section
+]{remarkbox}{Remark}{
+  enhanced,
+  colback=teal!6!white,
+  colframe=teal!70!black,
+  coltitle=black,
+  fonttitle=\bfseries,
+  breakable,
+  sharp corners,
+  attach boxed title to top left={yshift=-2mm, xshift=2mm},
+  boxed title style={colback=teal!25!white}
+}{rem}
+
+
+
+% ----------------------------------------
+% CUSTOM COMMANDS
+% ----------------------------------------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathcal{C}}

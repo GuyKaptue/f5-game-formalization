@@ -1,0 +1,155 @@
+% ========================================
+% CHAPTER 4: STRUCTURAL PROPERTIES
+% ========================================
+
+\section{Structural Properties of the \textbf{F5 Game}}
+\label{chap:structural_properties}
+
+This chapter analyzes the structural properties of the \textbf{F5 Game}, independently of numerical values or probabilities. These properties concern the informational nature of the game, the structure of its decision tree, fundamental symmetries, and the strategic asymmetries induced by certain cards or positions.
+
+% ========================================
+\subsection{Determinism and Information}
+\label{subsec:determinism_information}
+
+\begin{propositionbox}{Conditional determinism}{prop:conditional_determinism}
+\label{prop:conditional_determinism}
+We establish that the \textbf{F5 Game} is deterministic, conditional upon the initial distribution and the strategic choices made by the players \cite{von1944theory}.
+\end{propositionbox}
+
+\begin{proof}
+Once the distribution $\mathcal{D}$ is fixed, the evolution of the game depends solely on:
+\begin{enumerate}
+    \item the choices of suits $s_r$ made by the controllers;
+    \item the cards played $c_{i,r}$ by the players.
+\end{enumerate}
+No additional randomness intervenes after the distribution. 
+The game is therefore deterministic in the strict sense.
+\end{proof}
+
+\begin{propositionbox}{Imperfect information}{prop:imperfect_information}
+\label{prop:imperfect_information}
+The \textbf{F5 Game} is a game of imperfect information.
+\end{propositionbox}
+
+\begin{proof}
+At any time $t$, a player $i$ knows:
+\begin{itemize}
+    \item their own hand $h_i(t)$;
+    \item the cards played in previous rounds;
+    \item the current controller and the requested suit.
+\end{itemize}
+However, they do not know the opponents' hands $h_j(t)$ for $j \neq i$. 
+The information is therefore partial and asymmetric.
+\end{proof}
+
+% ========================================
+\subsection{Finiteness and Fairness}
+\label{subsec:finiteness_fairness}
+
+\begin{propositionbox}{Finite game tree}{prop:finite_game_tree}
+\label{prop:finite_game_tree}
+The game tree associated with a session of the \textbf{F5 Game} is finite.
+\end{propositionbox}
+
+\begin{proof}
+\begin{itemize}
+    \item The maximum depth is 5 rounds.
+    \item At each node, each player has a finite number of choices (at most 5 cards, 4 suits).
+    \item No cycles are possible: a played card is permanently removed.
+\end{itemize}
+The game tree is therefore finite and acyclic.
+\end{proof}
+
+\begin{theorembox}{Ex-ante fairness}{theo:ex_ante_fairness}
+\label{theo:ex_ante_fairness}
+Before the distribution, we observe that all players have the same expected gain \cite{nash1950equilibrium}:
+\[
+\mathbb{E}[\delta_i] = 0, \qquad \forall i \in \mathcal{N}.
+\]
+\end{theorembox}
+
+\begin{proof}
+By the stake conservation theorem (Theorem~\ref{theo:zero_sum}):
+\[
+\sum_{i=1}^n \delta_i = 0.
+\]
+Taking the expectation:
+\[
+\sum_{i=1}^n \mathbb{E}[\delta_i] = 0.
+\]
+By the symmetry of the distribution (all players are indistinguishable before the distribution):
+\[
+\mathbb{E}[\delta_1] = \cdots = \mathbb{E}[\delta_n].
+\]
+Thus:
+\[
+n \cdot \mathbb{E}[\delta_i] = 0 \Rightarrow \mathbb{E}[\delta_i] = 0.
+\]
+\end{proof}
+
+% ========================================
+\subsection{Asymmetry and Strategic Value}
+\label{subsec:strategic_asymmetry}
+
+\begin{propositionbox}{Strategic duality of value 3 cards}{prop:strategic_duality_3}
+\label{prop:strategic_duality_3}
+We define value 3 cards as having a dual strategic nature:
+\begin{itemize}
+    \item \textbf{Weak} for winning a round (minimum value);
+    \item \textbf{Strong} for the final victory (Cora multiplier).
+\end{itemize}
+\end{propositionbox}
+
+\begin{notebox}{Strategic dilemma of value 3 cards}{note:strategic_dilemma_3}
+\label{note:strategic_dilemma_3}
+This duality creates a strategic dilemma \cite{binmore2007playing}: 
+whether to keep a 3 for a potential Cora or use it to intentionally lose a round and preserve stronger cards.
+\end{notebox}
+
+\begin{propositionbox}{Strategic importance of the final control}{prop:final_control}
+\label{prop:final_control}
+Control of round 5 possesses a higher strategic value than that of any other round.
+\end{propositionbox}
+
+\begin{proof}
+The controller of round 5:
+\begin{itemize}
+    \item chooses the final suit, which constitutes a decisive advantage;
+    \item possesses maximum information (four rounds observed);
+    \item can directly exploit their best remaining card;
+    \item controls the potentially multiplicative Cora mechanism.
+\end{itemize}
+\end{proof}
+
+% ========================================
+\subsection{Impact of the Dealer and Play Direction}
+\label{subsec:dealer_impact}
+
+\begin{propositionbox}{Positional advantage of the dealer}{prop:dealer_advantage}
+\label{prop:dealer_advantage}
+We note that the dealer benefits from a double strategic advantage:
+\begin{enumerate}
+    \item they choose the direction of play, influencing the distribution order;
+    \item they play last during the first round, providing them with additional information.
+\end{enumerate}
+\end{propositionbox}
+
+\begin{notebox}{Self-balancing of the game}{note:self_balancing}
+\label{note:self_balancing}
+This mechanism justifies why the winner becomes the dealer: 
+it is a self-balancing principle where the most successful player assumes the most exposed position.
+\end{notebox}
+
+\begin{propositionbox}{Influence of the cut}{prop:cut_influence}
+\label{prop:cut_influence}
+The cutting of the deck changes the order of the cards but does not alter the ex-ante expected gain.
+\end{propositionbox}
+
+\begin{proof}
+For any cut position $k$, the resulting distribution is a random permutation of the shuffled deck. 
+By the symmetry of permutations:
+\[
+\mathbb{E}[\delta_i \mid \text{cut at } k] = \mathbb{E}[\delta_i] = 0.
+\]
+We conclude that the cut introduces no structural bias.
+\end{proof}

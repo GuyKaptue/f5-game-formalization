@@ -1,0 +1,163 @@
+% ========================================
+% CHAPTER 6: BALANCING ANALYSIS OF THE F5 GAME
+% ========================================
+
+\section{Balancing Analysis of the \textbf{F5 Game}}
+\label{chap:balancing_analysis}
+
+This chapter studies the balancing mechanisms of the \textbf{F5 Game}, specifically the role of the Cora multiplier, the variance induced by this mechanism, as well as several structural indicators (Gini, entropy) used to evaluate the strategic stability of the game \cite{nash1950equilibrium, ross2014first, gini1912variabilita, shannon1948mathematical}.
+
+% ========================================
+\subsection{Optimal Cora Multiplier}
+\label{subsec:cora_multiplier}
+
+\begin{theorembox}{Equilibrium condition for the Cora multiplier}{theo:cora_multiplier}
+\label{theo:cora_multiplier}
+Let $m$ be the Cora multiplier, $p$ the conditional probability of obtaining a Cora given a victory, and $k$ the desired attractiveness factor (relative expected gain). We define the optimal multiplier as:
+\[
+m^* = \frac{k - 1}{p} + 1.
+\]
+\end{theorembox}
+
+\begin{proof}
+The expected gain of a player winning the game is:
+\[
+\mathbb{E}[G] = (n-1)M_0 \bigl[1 + p(m-1)\bigr].
+\]
+To achieve an expected bonus equal to a factor $k$:
+\[
+1 + p(m-1) = k.
+\]
+We isolate $m$:
+\[
+m = \frac{k-1}{p} + 1.
+\]
+With $k = 1.5$ and $p \approx 0.15$:
+\[
+m^* \approx \frac{0.5}{0.15} + 1 \approx 4.33.
+\]
+The current multiplier $m=2$ therefore corresponds to an attractiveness factor:
+\[
+k = 1 + p(m-1) \approx 1.15.
+\]
+\end{proof}
+
+\begin{notebox}{Interpretation of the optimal multiplier}{note:optimal_multiplier}
+\label{note:optimal_multiplier}
+We note that the current multiplier ($m=2$) makes the Cora attractive but moderately so; an optimal multiplier ($m \approx 4.3$) would significantly increase strategic incentive, but at the cost of higher variance.
+\end{notebox}
+
+\begin{theorembox}{Variance induced by the Cora}{theo:cora_variance}
+\label{theo:cora_variance}
+The variance of a player's gain with the Cora system is proportional to:
+\[
+\mathrm{Var}[\delta_i] \propto \bigl[(n-1)M_0\bigr]^2 \bigl[(1-p) + m^2 p\bigr].
+\]
+\end{theorembox}
+
+\begin{proof}
+The gain takes two possible values:
+\[
+\delta_i =
+\begin{cases}
+(n-1)M_0 & \text{with probability } 1-p,\\
+m(n-1)M_0 & \text{with probability } p.
+\end{cases}
+\]
+The variance of a variable with two masses is:
+\[
+\mathrm{Var}(X) = p(1-p)(x_1 - x_2)^2.
+\]
+By factoring $(n-1)M_0$, we obtain the stated expression.
+\end{proof}
+
+\begin{notebox}{Impact of variance}{note:cora_variance_impact}
+\label{note:cora_variance_impact}
+The term $(m^2 - 1)p$ shows that the variance grows quadratically with $m$.
+For $m=2$ and $p=0.15$, we observe an increase in variance of approximately $45\%$.
+\end{notebox}
+
+% ========================================
+\subsection{Gini Coefficient of Values}
+\label{subsec:gini_coefficient}
+
+\begin{propositionbox}{Gini coefficient of deck values}{prop:gini_coefficient}
+\label{prop:gini_coefficient}
+The Gini coefficient for the distribution of values $V = \{3,\ldots,10\}$ is:
+\[
+G_V = \frac{\sum_{i,j} |v_i - v_j|}{2|V|^2 \mu_V} \approx 0.202.
+\]
+\end{propositionbox}
+
+\begin{proof}
+We calculate:
+\[
+\sum_{i,j} |v_i - v_j| = 168, \qquad |V| = 8, \qquad \mu_V = 6.5.
+\]
+Hence:
+\[
+G_V = \frac{168}{2 \cdot 64 \cdot 6.5} = \frac{168}{832} \approx 0.202.
+\]
+\end{proof}
+
+\begin{notebox}{Interpretation of the Gini coefficient}{note:gini_interpretation}
+\label{note:gini_interpretation}
+A Gini coefficient of $0.202$ indicates moderate inequality between card values.
+We consider this asymmetry sufficient to create differentiated strategies without introducing structural imbalance.
+\end{notebox}
+
+% ========================================
+\subsection{Shannon Entropy}
+\label{subsec:shannon_entropy}
+
+\begin{propositionbox}{Shannon entropy of a hand}{prop:shannon_entropy}
+\label{prop:shannon_entropy}
+The Shannon entropy associated with the uniform distribution of possible hands is \cite{shannon1948mathematical}:
+\[
+H = \log_2 \binom{32}{5} \approx 17.62 \text{ bits}.
+\]
+\end{propositionbox}
+
+\begin{proof}
+Each hand has a probability of:
+\[
+p = \frac{1}{\binom{32}{5}}.
+\]
+The entropy of a uniform distribution is:
+\[
+H = -\sum p \log_2 p = \log_2 \binom{32}{5} = \log_2(201376) \approx 17.62.
+\]
+\end{proof}
+
+\begin{notebox}{Interpretation of entropy}{note:entropy_interpretation}
+\label{note:entropy_interpretation}
+An entropy of $17.62$ bits indicates a vast hand space, which we believe guarantees high strategic diversity and low repetitiveness of games.
+\end{notebox}
+
+% ========================================
+\subsection{Balancing of Immediate Victories}
+\label{subsec:victory_balancing}
+
+\begin{propositionbox}{Impact of immediate victories}{prop:immediate_victory_impact}
+\label{prop:immediate_victory_impact}
+The conditions for immediate victory (sum $\leq 21$ or triple 7) reduce the average duration of a game by:
+\[
+\Delta t \approx P(\text{Immediate Victory}) \cdot t_{\text{game}},
+\]
+where $t_{\text{game}}$ is the average duration of a full game.
+\end{propositionbox}
+
+\begin{proof}
+A game is shortened with probability $P(\text{Immediate Victory})$.
+The reduction in duration is therefore the expectation of the time saved:
+\[
+\Delta t = \mathbb{E}[t_{\text{won immediately}}] = P(\text{Immediate Victory}) \cdot t_{\text{game}}.
+\]
+\end{proof}
+
+\begin{notebox}{Effect on game duration}{note:game_duration}
+\label{note:game_duration}
+With $P(\text{Immediate Victory}) \approx 1.75\%$ and an average game lasting $5$ minutes,
+we obtain a reduction of about $5$ seconds per game.
+We find that this effect is small but contributes to maintaining a dynamic pace.
+\end{notebox}

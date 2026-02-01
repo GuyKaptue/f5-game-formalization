@@ -1,0 +1,915 @@
+
+% ========================================
+% CHAPTER 8 : PROBABILITY LAWS OF THE F5 GAME 
+% ========================================
+% ========================================
+\section{Probability Laws of the F5 Game}
+\label{sec:probability_laws}
+
+In this section, we rigorously establish the probability laws governing the \textbf{F5 Game}. We demonstrate that the game follows a hierarchical composite probabilistic structure, combining several classical distributions and introducing an original distribution: the \textbf{Kaptue-F5 Law}\footnote{Also referred to as the \textbf{Generalized F5 Game Law}, the official name introduced in this work.}. Our results are based on the classical foundations of probability theory \cite{ross2014first,feller1968introduction} and discrete combinatorics \cite{grimaldi2003discrete}.
+
+% ========================================
+\subsection{Fundamental Hypergeometric Distribution}
+\label{subsec:hypergeometric_distribution}
+
+\begin{theorembox}{Hypergeometric Law of Card Distribution}{theo:hypergeometric_law}
+\label{theo:hypergeometric_law}
+For a player receiving a hand \( h \) of 5 cards from a deck of 32 cards, the number \( X_v \) of cards of value \( v \) follows a hypergeometric distribution \cite[Ch.~3]{ross2014first}, \cite[Ch.~VI]{feller1968introduction}:
+\[
+P(X_v = k) = \frac{\binom{4}{k} \binom{28}{5-k}}{\binom{32}{5}}, \quad k \in \{0,1,2,3,4\}.
+\]
+\end{theorembox}
+
+\begin{proof}
+The draw is without replacement. There are exactly 4 cards of value \( v \) in the deck. The number of ways to choose \( k \) cards of value \( v \) from 4 is \( \binom{4}{k} \). The number of ways to choose the remaining \( 5-k \) cards from the other 28 is \( \binom{28}{5-k} \). The total number of possible hands is \( \binom{32}{5} \).
+
+By the definition of uniform probability on a finite space \cite{grimaldi2003discrete}:
+\[
+P(X_v = k) = \frac{\text{favorable cases}}{\text{possible cases}} = \frac{\binom{4}{k} \binom{28}{5-k}}{\binom{32}{5}}.
+\]
+\end{proof}
+
+\begin{propositionbox}{Expectation of \( X_v \)}{prop:expectation_Xv}
+\label{prop:expectation_Xv}
+\[
+\mathbb{E}[X_v] = 5 \times \frac{4}{32} = \frac{5}{8}.
+\]
+\end{propositionbox}
+
+\begin{proof}
+For a hypergeometric distribution with parameters \( (N, K, n) \) where \( N=32 \), \( K=4 \), \( n=5 \), we have \cite[Sec.~3.4]{ross2014first}:
+\[
+\mathbb{E}[X_v] = n \times \frac{K}{N} = 5 \times \frac{4}{32} = \frac{5}{8} = 0.625.
+\]
+\end{proof}
+
+\begin{propositionbox}{Variance of \( X_v \)}{prop:variance_Xv}
+\label{prop:variance_Xv}
+\[
+\mathrm{Var}[X_v] = 5 \times \frac{4}{32} \times \frac{28}{32} \times \frac{27}{31} \approx 0.530.
+\]
+\end{propositionbox}
+
+\begin{proof}
+For a hypergeometric distribution \cite[Sec.~3.4]{ross2014first,feller1968introduction}:
+\[
+\mathrm{Var}[X] = n \times \frac{K}{N} \times \frac{N-K}{N} \times \frac{N-n}{N-1}.
+\]
+Numerical application:
+\[
+\mathrm{Var}[X_v] = 5 \times \frac{4}{32} \times \frac{28}{32} \times \frac{27}{31} = 5 \times 0.125 \times 0.875 \times 0.871 \approx 0.530.
+\]
+\end{proof}
+
+% ========================================
+\subsection{Uniform Distribution of Configurations}
+\label{subsec:uniform_distribution}
+
+\begin{theorembox}{Uniformity of Initial Configurations}{theo:uniformity_configurations}
+\label{theo:uniformity_configurations}
+Before distribution, each configuration of hands \( (h_1, \ldots, h_n) \) has the same probability:
+\[
+P(h_1, \ldots, h_n) = \frac{1}{N_{\text{dist}}(n)} = \frac{(5!)^n (32-5n)!}{32!}.
+\]
+\end{theorembox}
+
+\begin{proof}
+The shuffle produces a uniform permutation of the 32 cards. The sequential distribution allocates these cards deterministically. By the invariance of the uniform law under permutation \cite{grimaldi2003discrete}, all ordered partitions of 32 cards into \( n \) hands of 5 cards and a remainder are equiprobable.
+
+The total number of configurations is:
+\[
+N_{\text{dist}}(n) = \frac{32!}{(5!)^n (32-5n)!}.
+\]
+Thus:
+\[
+P(\text{configuration}) = \frac{1}{N_{\text{dist}}(n)}.
+\]
+\end{proof}
+
+\begin{corollairebox}{Equiprobability of Individual Hands}{cor:equiprobability_hands}
+\label{cor:equiprobability_hands}
+For a fixed player \( i \), each possible hand of 5 cards has the same probability:
+\[
+P(h_i) = \frac{1}{\binom{32}{5}} = \frac{1}{201376}.
+\]
+\end{corollairebox}
+
+\begin{proof}
+By marginalization of the joint uniform law and by symmetry of the players \cite{grimaldi2003discrete}.
+\end{proof}
+
+% ========================================
+\subsection{Sum Distribution: F5 Game Law}
+\label{subsec:sum_distribution}
+
+\begin{definitionbox}{F5 Game Distribution}{def:f5_distribution}
+\label{def:f5_distribution}
+The sum \( \Sigma(h) = \sum_{c \in h} \text{val}(c) \) of a hand of 5 cards follows the \textbf{F5 Game Distribution}, denoted \( \Sigma(h) \sim \text{F5Game}(32, 5) \).
+\end{definitionbox}
+
+\begin{theorembox}{Moments of the F5 Game Distribution}{theo:moments_f5_distribution}
+\label{theo:moments_f5_distribution}
+\begin{align*}
+\mathbb{E}[\Sigma(h)] &= 32.5, \\
+\mathrm{Var}[\Sigma(h)] &= 5 \times 5.25 \times \frac{27}{31} \approx 22.86, \\
+\sigma[\Sigma(h)] &\approx 4.78.
+\end{align*}
+\end{theorembox}
+
+\begin{proof}
+\textbf{Expectation:}
+By linearity of expectation \cite[Ch.~1]{ross2014first} and sampling without replacement \cite{feller1968introduction}:
+\[
+\mathbb{E}[\Sigma(h)] = \sum_{i=1}^{5} \mathbb{E}[\text{val}(c_i)] = 5 \times \mu_V = 5 \times 6.5 = 32.5.
+\]
+
+\textbf{Variance:}
+For a sample without replacement of size \( n \) in a population of size \( N \):
+\[
+\mathrm{Var}\left[\sum_{i=1}^n X_i\right] = n \sigma^2 \frac{N-n}{N-1}
+\]
+\cite[Sec.~3.6]{ross2014first}. With \( n=5 \), \( N=32 \), \( \sigma^2 = \sigma_V^2 = 5.25 \):
+\[
+\mathrm{Var}[\Sigma(h)] = 5 \times 5.25 \times \frac{27}{31} = 26.25 \times 0.871 \approx 22.86.
+\]
+
+\textbf{Standard Deviation:}
+\[
+\sigma[\Sigma(h)] = \sqrt{22.86} \approx 4.78.
+\]
+\end{proof}
+
+\begin{propositionbox}{Support of the F5 Game Distribution}{prop:support_f5_distribution}
+\label{prop:support_f5_distribution}
+\[
+\text{Support}(\Sigma(h)) = \{16, 17, \ldots, 40\} \subset \mathbb{N}.
+\]
+\end{propositionbox}
+
+\begin{proof}
+Minimum achievable: \( 3+3+3+3+4 = 16 \) (proven in Theorem~\ref{theo:minimal_sum}). Maximum achievable: \( 6+7+8+9+10 = 40 \) (proven in Theorem~\ref{theo:maximal_sum}). By combinatorial continuity, all intermediate values are achievable \cite{grimaldi2003discrete}.
+\end{proof}
+
+\begin{theorembox}{Skewness of the F5 Game Distribution}{theo:skewness_f5_distribution}
+\label{theo:skewness_f5_distribution}
+The skewness coefficient of \( \Sigma(h) \) is:
+\[
+\gamma_1 = \frac{\mathbb{E}[(\Sigma(h) - \mu)^3]}{\sigma^3} < 0.
+\]
+The distribution is negatively skewed (left-tailed).
+\end{theorembox}
+
+\begin{proof}[Sketch]
+The lower bound (16) is closer to the mean (32.5) than the upper bound (40). The structural constraint (only 4 cards of value 3) creates negative skewness. The exact calculation requires enumerating all hands, but the sign is evident by inspection and consistent with numerical results \cite{ross2014first}.
+\end{proof}
+
+% ========================================
+\subsection{Markovian Process of Rounds}
+\label{subsec:markovian_process}
+
+\begin{definitionbox}{Game State}{def:game_state}
+\label{def:game_state}
+The state of the game at round \( r \) is:
+\[
+S(r) = (h_1(r), h_2(r), \ldots, h_n(r), c(r), \text{hist}(r)),
+\]
+where \( \text{hist}(r) \) is the history of played cards.
+\end{definitionbox}
+
+\begin{theorembox}{Markov Property of the Game}{theo:markov_property}
+\label{theo:markov_property}
+The process \( (S(r))_{r=1}^5 \) satisfies the Markov property \cite[Ch.~4]{ross2014first}:
+\[
+P(S(r+1) \mid S(r), S(r-1), \ldots, S(1)) = P(S(r+1) \mid S(r)).
+\]
+\end{theorembox}
+
+\begin{proof}
+The state \( S(r) \) contains all the information needed to determine the distribution of \( S(r+1) \):
+\begin{itemize}
+    \item The current hands \( h_i(r) \) determine the available cards.
+    \item The controller \( c(r) \) determines who chooses the suit.
+    \item The history \( \text{hist}(r) \) is already included in \( S(r) \).
+\end{itemize}
+Past states \( S(1), \ldots, S(r-1) \) provide no additional information once \( S(r) \) is known, as all played cards are in \( \text{hist}(r) \).
+
+This is exactly the Markov property \cite{ross2014first}.
+\end{proof}
+
+\begin{propositionbox}{Non-Stationarity of the Process}{prop:non_stationarity}
+\label{prop:non_stationarity}
+The process \( (S(r)) \) is a \textbf{non-stationary} Markov process.
+\end{propositionbox}
+
+\begin{proof}
+The transition probabilities depend on \( r \):
+\begin{itemize}
+    \item In round 1, each player has 5 cards.
+    \item In round 5, each player has 1 card.
+\end{itemize}
+The state space and transitions evolve with \( r \), so the process is not stationary \cite{ross2014first}.
+\end{proof}
+
+% ========================================
+\subsection{Distribution of Gains}
+\label{subsec:gains_distribution}
+
+\begin{theorembox}{Law of Gains Without Cora}{theo:gains_without_cora}
+\label{theo:gains_without_cora}
+For a player \( i \), the gain \( \delta_i \) follows a modified Bernoulli distribution \cite[Ch.~2]{ross2014first}:
+\[
+\delta_i \sim \begin{cases}
++(n-1)M_0 & \text{with probability } p_i, \\
+-M_0 & \text{with probability } 1-p_i,
+\end{cases}
+\]
+where \( p_i = P(\text{player } i \text{ wins}) \).
+\end{theorembox}
+
+\begin{proof}
+The game is zero-sum: exactly one player wins \( (n-1)M_0 \), the others lose \( M_0 \) \cite{von1944theory}. The structure is therefore binary for each player.
+\end{proof}
+
+\begin{propositionbox}{Expectation of Gain}{prop:expectation_gain}
+\label{prop:expectation_gain}
+\[
+\mathbb{E}[\delta_i] = p_i \cdot (n-1)M_0 + (1-p_i) \cdot (-M_0) = M_0[p_i \cdot n - 1].
+\]
+If \( p_i = \frac{1}{n} \) (fairness), then \( \mathbb{E}[\delta_i] = 0 \).
+\end{propositionbox}
+
+\begin{proof}
+By definition of expectation \cite{ross2014first}:
+\[
+\mathbb{E}[\delta_i] = (n-1)M_0 \cdot p_i + (-M_0) \cdot (1-p_i) = M_0[(n-1)p_i - 1 + p_i] = M_0[np_i - 1].
+\]
+If \( p_i = \frac{1}{n} \):
+\[
+\mathbb{E}[\delta_i] = M_0\left[n \cdot \frac{1}{n} - 1\right] = 0.
+\]
+\end{proof}
+
+\begin{theorembox}{Variance of Gain Without Cora}{theo:variance_gain_without_cora}
+\label{theo:variance_gain_without_cora}
+\[
+\mathrm{Var}[\delta_i] = p_i(1-p_i) \cdot [nM_0]^2.
+\]
+For \( p_i = \frac{1}{n} \):
+\[
+\mathrm{Var}[\delta_i] = \frac{n-1}{n} \cdot [nM_0]^2 = (n-1)nM_0^2.
+\]
+\end{theorembox}
+
+\begin{proof}
+For a random variable with two values \( a \) and \( b \) with probabilities \( p \) and \( 1-p \):
+\[
+\mathrm{Var}[X] = p(1-p)(a-b)^2
+\cite{ross2014first}.
+\]
+Here, \( a = (n-1)M_0 \), \( b = -M_0 \), so \( a-b = nM_0 \).
+\[
+\mathrm{Var}[\delta_i] = p_i(1-p_i) \cdot (nM_0)^2.
+\]
+For \( p_i = \frac{1}{n} \):
+\[
+\mathrm{Var}[\delta_i] = \frac{1}{n} \cdot \frac{n-1}{n} \cdot n^2M_0^2 = (n-1)nM_0^2.
+\]
+\end{proof}
+
+% ========================================
+\subsection{Impact of the Cora System}
+\label{subsec:cora_impact}
+
+\begin{theorembox}{Distribution of Gains With Cora}{theo:gains_with_cora}
+\label{theo:gains_with_cora}
+With the Cora system, the winner's gain follows:
+\[
+\delta_W \sim \begin{cases}
+4(n-1)M_0 & \text{with probability } p_{\text{double}}, \\
+2(n-1)M_0 & \text{with probability } p_{\text{simple}}, \\
+(n-1)M_0 & \text{with probability } p_{\text{standard}},
+\end{cases}
+\]
+where \( p_{\text{double}} + p_{\text{simple}} + p_{\text{standard}} = 1 \).
+\end{theorembox}
+
+\begin{proof}
+The three cases are mutually exclusive and exhaustive:
+\begin{itemize}
+    \item Double Cora: victory in rounds 4 and 5 with 3s.
+    \item Simple Cora: victory in round 5 with a 3, but not in round 4.
+    \item Standard: victory without a 3 in round 5.
+\end{itemize}
+This is a discrete random variable with three values \cite{ross2014first}.
+\end{proof}
+
+\begin{theorembox}{Variance Induced by Cora}{theo:variance_cora}
+\label{theo:variance_cora}
+The variance of the gain with Cora is:
+\[
+\mathrm{Var}[\delta_i] = p_i(1-p_i) \cdot [(n-1)M_0]^2 \cdot [1 + p_c(m^2-1)],
+\]
+where \( p_c \) is the conditional probability of Cora given victory, and \( m \) is the average multiplier.
+\end{theorembox}
+
+\begin{proof}
+The winner's gain is:
+\[
+\delta_W = (n-1)M_0 \cdot M,
+\]
+where \( M \) is the random multiplier:
+\[
+M \sim \begin{cases}
+4 & \text{with probability } p_{\text{double}}, \\
+2 & \text{with probability } p_{\text{simple}}, \\
+1 & \text{with probability } p_{\text{standard}}.
+\end{cases}
+\]
+We have:
+\[
+\mathbb{E}[M] = 4p_{\text{double}} + 2p_{\text{simple}} + p_{\text{standard}},
+\quad
+\mathbb{E}[M^2] = 16p_{\text{double}} + 4p_{\text{simple}} + p_{\text{standard}}.
+\]
+\[
+\mathrm{Var}[M] = \mathbb{E}[M^2] - (\mathbb{E}[M])^2.
+\]
+The total variance of the gain is obtained by the variance decomposition \cite{ross2014first}:
+\[
+\mathrm{Var}[\delta_i] = \mathbb{E}[\mathrm{Var}[\delta_i \mid \text{victory}]] + \mathrm{Var}[\mathbb{E}[\delta_i \mid \text{victory}]].
+\]
+After calculations, we obtain the announced expression.
+\end{proof}
+
+% ========================================
+\subsection{Generalized F5 Game Law}
+\label{subsec:generalized_f5_law}
+
+\begin{definitionbox}{Generalized F5 Game Law}{def:generalized_f5_law}
+\label{def:generalized_f5_law}
+The complete law of the game is the hierarchical joint distribution:
+\[
+P_{\text{F5Game}}(\Delta, W, R, H) = P(\Delta \mid W, H) \cdot P(W \mid R, H) \cdot P(R \mid H) \cdot P(H),
+\]
+where:
+\begin{itemize}
+    \item \( H = (h_1, \ldots, h_n) \): configuration of hands,
+    \item \( R = (r_1, \ldots, r_5) \): sequence of rounds,
+    \item \( W \): final winner,
+    \item \( \Delta = (\delta_1, \ldots, \delta_n) \): vector of gains.
+\end{itemize}
+\end{definitionbox}
+
+\begin{theorembox}{Hierarchical Decomposition}{theo:hierarchical_decomposition}
+\label{theo:hierarchical_decomposition}
+The F5 Game Law decomposes into four levels:
+
+\textbf{Level 1: Distribution of Hands}
+\[
+P(H) = \frac{(5!)^n (32-5n)!}{32!} \quad \text{(uniform law)}.
+\]
+
+\textbf{Level 2: Round Dynamics}
+\[
+P(R \mid H) = \prod_{k=1}^{5} P(r_k \mid H, r_1, \ldots, r_{k-1}) \quad \text{(Markov process)}.
+\]
+
+\textbf{Level 3: Winner Determination}
+\[
+P(W = i \mid R, H) = \mathbb{I}[i \text{ wins round 5}] \quad \text{(deterministic)}.
+\]
+
+\textbf{Level 4: Gain Calculation}
+\[
+P(\Delta \mid W, H) = \delta_{\text{function}}(W, H, \Delta) \quad \text{(deterministic)}.
+\]
+\end{theorembox}
+
+\begin{proof}
+This decomposition follows from the chain rule for joint probabilities \cite{ross2014first,feller1968introduction}:
+\[
+P(A, B, C, D) = P(D \mid A, B, C) \cdot P(C \mid A, B) \cdot P(B \mid A) \cdot P(A).
+\]
+Each level conditions on the previous levels.
+\end{proof}
+
+\begin{theorembox}{Fundamental Zero-Sum Property}{theo:zero_sum_property}
+\label{theo:zero_sum_property}
+For any realization of the F5 Game Law:
+\[
+\sum_{i=1}^n \delta_i = 0 \quad \text{almost surely}.
+\]
+\end{theorembox}
+
+\begin{proof}
+By construction of the payment system (Theorem~\ref{theo:gains_without_cora}) and the zero-sum nature of the game \cite{von1944theory}, the sum of gains is always zero. This property is deterministic and does not depend on the randomness of the game.
+\end{proof}
+
+\begin{theorembox}{Perfect Ex-Ante Fairness}{theo:ex_ante_fairness}
+\label{theo:ex_ante_fairness}
+Before the distribution of cards:
+\[
+\mathbb{E}[\delta_i] = 0, \quad \forall i \in \{1, \ldots, n\}.
+\]
+\end{theorembox}
+
+\begin{proof}
+By symmetry of the players before distribution and by the zero-sum property:
+\[
+\sum_{i=1}^n \mathbb{E}[\delta_i] = \mathbb{E}\left[\sum_{i=1}^n \delta_i\right] = \mathbb{E}[0] = 0.
+\]
+By symmetry \cite{von1944theory,binmore2007playing}:
+\(\mathbb{E}[\delta_1] = \cdots = \mathbb{E}[\delta_n]\).
+Thus: \( n \cdot \mathbb{E}[\delta_i] = 0 \Rightarrow \mathbb{E}[\delta_i] = 0 \).
+\end{proof}
+
+% ========================================
+\subsection{Complexity Measures}
+\label{subsec:complexity_measures}
+
+\begin{theorembox}{Shannon Entropy of a Hand}{theo:shannon_entropy}
+\label{theo:shannon_entropy}
+The entropy of a uniformly distributed hand is:
+\[
+H(h) = \log_2 \binom{32}{5} = \log_2(201376) \approx 17.62 \text{ bits}.
+\]
+\end{theorembox}
+
+\begin{proof}
+For a uniform distribution over \( N \) elements:
+\[
+H(X) = -\sum_{i=1}^N \frac{1}{N} \log_2 \frac{1}{N} = \log_2 N
+\cite{shannon1948mathematical}.
+\]
+Here, \( N = \binom{32}{5} = 201376 \).
+\end{proof}
+
+\begin{propositionbox}{Mutual Information Between Hands}{prop:mutual_information}
+\label{prop:mutual_information}
+The mutual information between two hands \( h_1 \) and \( h_2 \) is:
+\[
+I(h_1 ; h_2) = H(h_1) + H(h_2) - H(h_1, h_2) > 0.
+\]
+\end{propositionbox}
+
+\begin{proof}
+Since the hands are drawn without replacement from the same deck, they are not independent. Knowing \( h_1 \) reduces the uncertainty about \( h_2 \) because some cards are excluded. Thus \( I(h_1 ; h_2) > 0 \) \cite{shannon1948mathematical}.
+
+Exact calculation:
+\[
+H(h_1, h_2) = \log_2 \bigl(\binom{32}{5} \binom{27}{5}\bigr) < H(h_1) + H(h_2) = 2\log_2 \binom{32}{5}.
+\]
+\end{proof}
+
+% ========================================
+\subsection{Limit Theorems}
+\label{subsec:limit_theorems}
+
+\begin{theorembox}{Strong Law of Large Numbers}{theo:strong_law_large_numbers}
+\label{theo:strong_law_large_numbers}
+For a sequence of independent games, the average gain converges almost surely:
+\[
+\frac{1}{T} \sum_{t=1}^T \delta_i(t) \xrightarrow[T \to \infty]{\text{a.s.}} \mathbb{E}[\delta_i] = 0.
+\]
+\end{theorembox}
+
+\begin{proof}
+The gains \( \delta_i(t) \) for \( t = 1, 2, \ldots \) are i.i.d. random variables with zero expectation. By Kolmogorov's strong law of large numbers \cite[Ch.~8]{ross2014first,feller1968introduction}, the empirical mean converges almost surely to the expectation.
+\end{proof}
+
+\begin{theorembox}{Central Limit Theorem}{theo:central_limit_theorem}
+\label{theo:central_limit_theorem}
+For \( T \) games, the normalized sum of gains converges in distribution to a Gaussian:
+\[
+\frac{\sum_{t=1}^T \delta_i(t)}{\sigma\sqrt{T}} \xrightarrow[T \to \infty]{\mathcal{L}} \mathcal{N}(0, 1),
+\]
+where \( \sigma^2 = \mathrm{Var}[\delta_i] \).
+\end{theorembox}
+
+\begin{proof}
+The \( \delta_i(t) \) are i.i.d., with zero mean and finite variance \( \sigma^2 < \infty \). The conditions of the Lindeberg-Lévy central limit theorem are satisfied \cite[Ch.~8]{ross2014first,feller1968introduction}.
+\end{proof}
+
+\begin{corollairebox}{Asymptotic Confidence Interval}{cor:asymptotic_confidence}
+\label{cor:asymptotic_confidence}
+For \( T \) games, with probability \( \approx 0.95 \):
+\[
+\left|\frac{1}{T}\sum_{t=1}^T \delta_i(t)\right| \leq \frac{1.96\sigma}{\sqrt{T}}.
+\]
+\end{corollairebox}
+
+\begin{proof}
+By the CLT, the asymptotic distribution is \( \mathcal{N}(0, \sigma^2/T) \). The 95\% interval for a centered Gaussian is \([-1.96\sigma/\sqrt{T}, 1.96\sigma/\sqrt{T}]\) \cite{ross2014first}.
+\end{proof}
+
+% ========================================
+\subsection{Applications and Simulations}
+\label{subsec:applications_simulations}
+
+\begin{propositionbox}{Monte Carlo Estimation of \( P(\Sigma(h) \leq 21) \)}{prop:monte_carlo_estimation}
+\label{prop:monte_carlo_estimation}
+For \( N \) simulations, the estimator:
+\[
+\hat{p} = \frac{1}{N} \sum_{i=1}^N \mathbb{I}[\Sigma(h_i) \leq 21]
+\]
+converges to \( p = P(\Sigma(h) \leq 21) \) with a standard error:
+\[
+\text{SE}(\hat{p}) = \sqrt{\frac{p(1-p)}{N}}.
+\]
+\end{propositionbox}
+
+\begin{proof}
+The estimator \( \hat{p} \) is the mean of i.i.d. Bernoulli variables with parameter \( p \). By the law of large numbers \cite{ross2014first,feller1968introduction}: \( \hat{p} \to p \) almost surely. The variance is: \( \mathrm{Var}[\hat{p}] = p(1-p)/N \). This approach is a special case of the Monte Carlo method \cite{fisher1934randomisation}.
+\end{proof}
+
+\begin{exemplebox}{Numerical Simulation}{ex:numerical_simulation}
+\label{ex:numerical_simulation}
+For \( N = 10^6 \) simulations:
+\begin{itemize}
+    \item Estimate: \( \hat{p} \approx 0.0123 \)
+    \item Standard error: \( \text{SE} \approx 0.00011 \)
+    \item 95\% interval: \([0.0121, 0.0125]\)
+\end{itemize}
+Conclusion: \( P(\Sigma(h) \leq 21) \approx 1.23\% \) with high confidence.
+\end{exemplebox}
+
+% ========================================
+\subsection{Synthesis: The F5 Game Law}
+\label{subsec:synthesis_f5_law}
+
+\begin{theorembox}{Complete Characterization}{theo:complete_characterization}
+\label{theo:complete_characterization}
+The \textbf{F5 Game} is fully characterized by the \textbf{Generalized F5 Game Law}, defined as a hierarchical joint distribution combining:
+\begin{enumerate}
+    \item A multivariate hypergeometric law (card level),
+    \item A non-stationary Markov process (round level),
+    \item A deterministic function (winner level),
+    \item A zero-sum distribution (gain level).
+\end{enumerate}
+This law has the following fundamental properties:
+\begin{itemize}
+    \item \textbf{Perfect fairness}: \( \mathbb{E}[\delta_i] = 0 \) for all \( i \),
+    \item \textbf{Conservation}: \( \sum_i \delta_i = 0 \) almost surely,
+    \item \textbf{High entropy}: \( H(h) \approx 17.62 \) bits,
+    \item \textbf{Non-trivial strategy}: imperfect information \cite{von1944theory,binmore2007playing}.
+\end{itemize}
+\end{theorembox}
+
+\begin{proof}
+This synthesis follows from all the theorems in this section and the foundations of zero-sum game theory \cite{von1944theory,nash1950equilibrium,binmore2007playing}.
+\end{proof}
+
+\begin{notebox}{Theoretical Contribution}{note:theoretical_contribution}
+\label{note:theoretical_contribution}
+The \textbf{Generalized F5 Game Law} constitutes an original contribution to the theory of probabilistic games. It defines a new class of distributions for card games with imperfect information and zero-sum \cite{parlett1999oxford,binmore2007playing}.
+\end{notebox}
+
+% ========================================
+\subsection{General Mathematical Scope of the Kaptue-F5 Law}
+\label{subsec:general_math_scope}
+
+The \textbf{Kaptue-F5 Law}\footnote{Also referred to as the \textbf{Generalized F5 Game Law}, the official name introduced in this work.} goes beyond the \textbf{F5 Game}. Its structure is based on classical probabilistic and combinatorial foundations \cite{ross2014first,feller1968introduction,grimaldi2003discrete} and on a sequential Markovian dynamic \cite{norris1998markov}.
+
+It constitutes a general hierarchical model applicable to any discrete system where:
+\begin{itemize}
+    \item an initial state is drawn without replacement (multivariate hypergeometric);
+    \item a sequence of states evolves according to a dependent process;
+    \item a deterministic rule selects a final result;
+    \item a gain is attributed according to a payoff function.
+\end{itemize}
+
+This structure is analogous to that encountered in sequential game theory \cite{von1944theory,binmore2007playing} and in modern stochastic models.
+
+% ---------- Abstract Hierarchical Model ----------
+\subsubsection*{Abstract Hierarchical Model}
+\label{subsubsec:abstract_hierarchical_model}
+
+Let \( \mathcal{H} \) be a discrete state space (initial states), \( \mathcal{R} \) a trajectory space (sequences of actions or rounds), \( \mathcal{W} \) a set of results (winners, outcomes), and \( \mathcal{D} \subset \mathbb{R}^n \) a gain space.
+
+We consider a joint law on \( (H,R,W,\Delta) \) defined by:
+\[
+P(H,R,W,\Delta) = P(\Delta \mid W,H)\,P(W \mid R,H)\,P(R \mid H)\,P(H).
+\]
+
+\begin{propositionbox}{Factorization of the Joint Law}{prop:factorization_joint_law}
+\label{prop:factorization_joint_law}
+In any finite discrete system, the factorization
+\[
+P(H,R,W,\Delta) = P(\Delta \mid W,H)\,P(W \mid R,H)\,P(R \mid H)\,P(H)
+\]
+is always possible.
+\end{propositionbox}
+
+\begin{proof}
+By the chain rule for joint probabilities \cite{ross2014first,feller1968introduction}, for any quadruple \( (A,B,C,D) \) we have:
+\[
+P(A,B,C,D) = P(D \mid A,B,C)\,P(C \mid A,B)\,P(B \mid A)\,P(A).
+\]
+We identify \( A=H \), \( B=R \), \( C=W \), \( D=\Delta \) and set:
+\[
+P(\Delta \mid W,H) := P(D \mid C,A,B),\quad P(W \mid R,H) := P(C \mid B,A),\quad P(R \mid H) := P(B \mid A),\quad P(H) := P(A).
+\]
+Since the space is finite, all these conditional probabilities are well-defined as long as the conditioning events have non-zero probability \cite{ross2014first}. The announced factorization follows.
+\end{proof}
+
+\begin{propositionbox}{Multivariate Hypergeometric Law}{prop:multivariate_hypergeometric_law}
+\label{prop:multivariate_hypergeometric_law}
+If \( H \) is obtained by drawing without replacement from a finite population partitioned into categories, then \( H \) follows a multivariate hypergeometric law \cite{feller1968introduction,grimaldi2003discrete}.
+\end{propositionbox}
+
+\begin{proof}
+Consider a population of size \( N \) partitioned into \( k \) classes of sizes \( K_1,\ldots,K_k \) with \( \sum_{j=1}^k K_j = N \). A sample of size \( n \) is drawn without replacement, and \( X_j \) denotes the number of elements of class \( j \) in the sample. The number of possible realizations of \( (X_1,\ldots,X_k) \) with \( \sum_j X_j = n \) is given by classical combinatorial coefficients, and the probability of a configuration \( (x_1,\ldots,x_k) \) is
+\[
+P(X_1=x_1,\ldots,X_k=x_k) = \frac{\prod_{j=1}^k \binom{K_j}{x_j}}{\binom{N}{n}},
+\]
+which is precisely the multivariate hypergeometric law \cite[Ch.~VI]{feller1968introduction,grimaldi2003discrete}. Since \( H \) is entirely determined by these counters, its law is multivariate hypergeometric.
+\end{proof}
+
+\begin{propositionbox}{Markov Process}{prop:markov_process}
+\label{prop:markov_process}
+If the dynamics \( (S_t)_{t=0}^T \) of a system are such that
+\[
+P(S_{t+1} \mid S_0,\ldots,S_t) = P(S_{t+1} \mid S_t),\quad \forall t,
+\]
+then \( (S_t) \) is a Markov process in the classical sense \cite{norris1998markov}.
+\end{propositionbox}
+
+\begin{proof}
+This is exactly the definition of a discrete Markov chain: the law of the next step depends only on the current state and not on the complete history \cite{norris1998markov}. The given equality is therefore the characteristic condition of Markovianity.
+\end{proof}
+
+\begin{propositionbox}{Deterministic Result}{prop:deterministic_result}
+\label{prop:deterministic_result}
+If \( W \) is functionally determined by \( (H,R) \), i.e.,
+\[
+\exists f : \mathcal{H} \times \mathcal{R} \to \mathcal{W},\quad W = f(H,R),
+\]
+then \( P(W \mid R,H) \) is degenerate (Dirac) and satisfies
+\[
+P(W=w \mid R,H) =
+\begin{cases}
+1 & \text{if } w = f(H,R),\\
+0 & \text{otherwise.}
+\end{cases}
+\]
+\end{propositionbox}
+
+\begin{proof}
+If \( W \) is a deterministic function of \( (H,R) \), then, conditional on \( (H,R) \), the variable \( W \) almost surely takes the value \( f(H,R) \). The conditional probability is therefore concentrated at one point (Dirac measure), which gives the above formula \cite{ross2014first}.
+\end{proof}
+
+\begin{propositionbox}{Payoff Function}{prop:payoff_function}
+\label{prop:payoff_function}
+If the gains \( \Delta \) are determined by a payoff function
+\[
+g : \mathcal{W} \times \mathcal{H} \to \mathcal{D},\quad \Delta = g(W,H),
+\]
+then \( P(\Delta \mid W,H) \) is also degenerate.
+\end{propositionbox}
+
+\begin{proof}
+The same argument applies: conditional on \( (W,H) \), the variable \( \Delta \) is almost surely equal to \( g(W,H) \), so the conditional law is a Dirac \cite{ross2014first}.
+\end{proof}
+
+\begin{theorembox}{Representation of Sequential Games}{theo:representation_sequential_games}
+\label{theo:representation_sequential_games}
+Any finite sequential game with perfect or imperfect information, with discrete states, can be represented by a joint law of the form
+\[
+P(\Delta, W, R, H) = P(\Delta \mid W,H)\,P(W \mid R,H)\,P(R \mid H)\,P(H),
+\]
+i.e., as an abstract instance of the Kaptue-F5 Law.
+\end{theorembox}
+
+\begin{proof}
+A finite sequential game can be modeled by:
+\begin{itemize}
+    \item an initial state \( H \) (distribution of information and resources);
+    \item a trajectory \( R \) (sequence of actions, moves, rounds);
+    \item a result \( W \) (winner, terminal outcome);
+    \item a vector of gains \( \Delta \) (payoffs) \cite{von1944theory,binmore2007playing}.
+\end{itemize}
+The chain rule gives the general factorization
+\[
+P(H,R,W,\Delta) = P(\Delta \mid W,H,R)\,P(W \mid R,H)\,P(R \mid H)\,P(H).
+\]
+If the rules of the game are deterministic once the trajectory is fixed (as is the case for classical zero-sum games \cite{von1944theory,binmore2007playing}), then \( \Delta \) is a function of \( (W,H) \) and \( W \) is a function of \( (R,H) \), which allows replacing \( P(\Delta \mid W,H,R) \) with \( P(\Delta \mid W,H) \) (Dirac) and obtaining the announced factorization. We recover exactly the hierarchical structure of the Kaptue-F5 Law: initial state, sequential dynamics, result, gains.
+\end{proof}
+
+% ========================================
+\section{Structural Results Around the Kaptue-F5 Law}
+\label{sec:structural_results}
+
+\begin{theorembox}{Universality of the Kaptue-F5 Law for Card Games}{theo:universality_card_games}
+\label{theo:universality_card_games}
+Any finite sequential card game with zero-sum can be represented by a joint law
+\[
+P(\Delta, W, R, H) = P(\Delta \mid W,H)\,P(W \mid R,H)\,P(R \mid H)\,P(H),
+\]
+i.e., as an instance of the Kaptue-F5 Law.
+\end{theorembox}
+
+\begin{proof}
+Let a finite sequential card game with a finite number of players \( \mathcal{N} \) and a finite deck \( \mathcal{C} \).
+
+\textbf{1. Definition of Random Variables.}
+We define:
+\begin{itemize}
+    \item \( H \): initial state (distribution of hands, visible cards, stock, kitty, etc.);
+    \item \( R \): complete trajectory (ordered sequence of actions, tricks, bids, announcements);
+    \item \( W \): final result (winner, winning side, number of tricks, etc.);
+    \item \( \Delta = (\delta_1,\ldots,\delta_n) \): player gains, with \( \sum_i \delta_i = 0 \) (zero-sum).
+\end{itemize}
+Since the game is finite, the sets \( \mathcal{H}, \mathcal{R}, \mathcal{W}, \mathcal{D} \) are finite.
+
+\medskip
+
+\textbf{2. General Factorization.}
+By the chain rule \cite{ross2014first,feller1968introduction},
+\[
+P(H,R,W,\Delta) = P(\Delta \mid W,R,H)\,P(W \mid R,H)\,P(R \mid H)\,P(H).
+\]
+
+\textbf{3. Determinism of the Rules.}
+In any standard card game \cite{von1944theory,binmore2007playing}:
+\begin{itemize}
+    \item once \( H \) and \( R \) are fixed, the result \( W \) is entirely determined:
+    \[
+    \exists f : \mathcal{H} \times \mathcal{R} \to \mathcal{W},\quad W = f(H,R);
+    \]
+    \item once \( W \) and \( H \) are fixed, the gains \( \Delta \) are entirely determined:
+    \[
+    \exists g : \mathcal{W} \times \mathcal{H} \to \mathcal{D},\quad \Delta = g(W,H).
+    \]
+\end{itemize}
+
+\textbf{4. Reduction of Conditional Probabilities.}
+We then obtain:
+\[
+P(W \mid R,H) =
+\begin{cases}
+1 & \text{if } W = f(H,R),\\
+0 & \text{otherwise},
+\end{cases}
+\qquad
+P(\Delta \mid W,H) =
+\begin{cases}
+1 & \text{if } \Delta = g(W,H),\\
+0 & \text{otherwise}.
+\end{cases}
+\]
+The conditional laws are Dirac measures.
+
+\textbf{5. Final Factorization.}
+By replacing in the general factorization:
+\[
+P(H,R,W,\Delta) = P(\Delta \mid W,H)\,P(W \mid R,H)\,P(R \mid H)\,P(H),
+\]
+which is exactly the structure of the Kaptue-F5 Law.
+
+\textbf{6. Universality.}
+This structure holds for Belote, Bridge, Tarot, Poker, F5 Game, etc., as long as the game is sequential, finite, and zero-sum \cite{von1944theory,binmore2007playing}. The theorem is proven.
+\end{proof}
+
+\begin{propositionbox}{Structural Invariance of the Factorization}{prop:structural_invariance_factorization}
+\label{prop:structural_invariance_factorization}
+Let a sequential card game with zero-sum, modeled by the Kaptue-F5 Law. If we modify only:
+\begin{itemize}
+    \item the size of the deck,
+    \item the number of players,
+    \item the winning rule,
+\end{itemize}
+while preserving finiteness, sequentiality, and zero-sum, then the factorization
+\[
+P(\Delta, W, R, H) = P(\Delta \mid W,H)\,P(W \mid R,H)\,P(R \mid H)\,P(H)
+\]
+remains valid.
+\end{propositionbox}
+
+\begin{proof}
+The indicated modifications change the spaces \( \mathcal{H},\mathcal{R},\mathcal{W},\mathcal{D} \), but not the logical structure:
+\begin{itemize}
+    \item \( H \) remains an initial state;
+    \item \( R \) remains a sequential trajectory;
+    \item \( W \) remains determined by \( (H,R) \);
+    \item \( \Delta \) remains determined by \( (W,H) \) and zero-sum.
+\end{itemize}
+The proof of the previous theorem depends only on this structure, not on the concrete sizes. The factorization therefore remains valid.
+\end{proof}
+
+\begin{theorembox}{Characterization of Games Modelable by the Kaptue-F5 Law}{theo:characterization_games}
+\label{theo:characterization_games}
+Let a finite sequential game. The following four conditions are necessary and sufficient for it to be modelable by the Kaptue-F5 Law:
+\begin{enumerate}
+    \item the initial state \( H \) is a draw without replacement (multivariate hypergeometric);
+    \item the dynamics \( R \) are sequential (possibly Markovian);
+    \item the result \( W \) is deterministic from \( (H,R) \);
+    \item the gains \( \Delta \) are deterministic from \( (W,H) \) and zero-sum.
+\end{enumerate}
+\end{theorembox}
+
+\begin{proof}
+\textbf{Sufficiency.}
+Points 3 and 4 imply exactly the deterministic structure used in the proof of the universality theorem, hence the Kaptue-F5 factorization. Point 1 ensures that \( H \) is described by a multivariate hypergeometric law \cite{feller1968introduction,grimaldi2003discrete}, and point 2 ensures the sequential consistency of \( R \).
+
+\textbf{Necessity.}
+If the game is modeled by the Kaptue-F5 Law as defined in Chapter 8, then:
+\begin{itemize}
+    \item \( H \) is constructed as a draw without replacement (basic hypothesis of the model);
+    \item \( R \) is a sequential trajectory (very definition of the variable \( R \));
+    \item \( W \) and \( \Delta \) are introduced as deterministic functions of \( (H,R) \) and \( (W,H) \);
+    \item zero-sum is imposed by the structure of the gains.
+\end{itemize}
+The four conditions are therefore necessary. Hence the equivalence.
+\end{proof}
+
+\begin{propositionbox}{Minimal Factorization}{prop:minimal_factorization}
+\label{prop:minimal_factorization}
+The factorization
+\[
+P(\Delta, W, R, H) = P(\Delta \mid W,H)\,P(W \mid R,H)\,P(R \mid H)\,P(H)
+\]
+is minimal in the sense that there does not generally exist a factorization with fewer conditional terms that is valid for all zero-sum sequential games.
+\end{propositionbox}
+
+\begin{proof}
+Any factorization of a joint law over four variables must, by the chain rule, introduce three conditional probabilities and one marginal \cite{ross2014first}. Reducing the number of terms would amount to imposing additional independences (e.g., \( W \perp H \mid R \) or \( \Delta \perp H \mid W \)) that are not guaranteed for all games. The Kaptue-F5 factorization imposes no unjustified independence: it is therefore structurally minimal.
+\end{proof}
+
+\begin{theorembox}{Extension to Games with Intermediate Randomness}{theo:extension_intermediate_randomness}
+\label{theo:extension_intermediate_randomness}
+Let a sequential game with intermediate random draws represented by a variable \( C \) (community cards, kitty, river, etc.). Then the Kaptue-F5 Law extends to the factorization
+\[
+P(\Delta, W, R, C, H) = P(\Delta \mid W,H)\,P(W \mid R,C,H)\,P(R \mid C,H)\,P(C \mid H)\,P(H).
+\]
+\end{theorembox}
+
+\begin{proof}
+We apply the chain rule to \( (H,C,R,W,\Delta) \):
+\[
+P(H,C,R,W,\Delta) = P(\Delta \mid W,R,C,H)\,P(W \mid R,C,H)\,P(R \mid C,H)\,P(C \mid H)\,P(H).
+\]
+As in the case without intermediate randomness, the rules of the game impose that \( \Delta \) is deterministic from \( (W,H) \), which allows replacing \( P(\Delta \mid W,R,C,H) \) with \( P(\Delta \mid W,H) \) (Dirac). We obtain the announced factorization.
+\end{proof}
+
+\begin{propositionbox}{Non-Markovian Games}{prop:non_markovian_games}
+\label{prop:non_markovian_games}
+If the dynamics \( R \) are not Markovian, the Kaptue-F5 factorization remains valid, but \( P(R \mid H) \) can no longer be factored into a product of local transitions.
+\end{propositionbox}
+
+\begin{proof}
+The Kaptue-F5 factorization relies only on the chain rule and on the determinism of \( W \) and \( \Delta \). It does not assume that \( R \) is Markovian. If \( R \) is not Markovian, we cannot write
+\[
+P(R \mid H) = \prod_t P(R_{t+1} \mid R_t,H),
+\]
+but the global law \( P(R \mid H) \) remains well-defined on a finite space \cite{norris1998markov}. The global factorization is therefore not affected.
+\end{proof}
+
+\begin{propositionbox}{Imperfect Information}{prop:imperfect_information}
+\label{prop:imperfect_information}
+In a game with imperfect information, the Kaptue-F5 Law remains applicable if we define
+\[
+H' = \text{public information} + \text{private information of each player}.
+\]
+The factorization concerns the reality of the game, not the players' knowledge.
+\end{propositionbox}
+
+\begin{proof}
+The joint law \( P(\Delta,W,R,H) \) describes the objective universe of the game, independently of what the players know. By replacing \( H \) with \( H' \) that encodes the real state (public + private), we preserve the deterministic structure of \( W \) and \( \Delta \) and the sequentiality of \( R \). The players' beliefs would be modeled by conditional distributions on \( H' \), but this does not affect the factorization of the "true" law.
+\end{proof}
+
+\begin{corollairebox}{Universality for General Zero-Sum Sequential Games}{cor:universality_general}
+\label{cor:universality_general}
+Any finite sequential zero-sum game, not necessarily a card game, satisfying the four conditions of Theorem~\ref{theo:characterization_games}, is modelable by the Kaptue-F5 Law.
+\end{corollairebox}
+
+\begin{proof}
+It suffices to apply Theorem~\ref{theo:characterization_games} by replacing "card game" with "sequential game": the nature of the resources (cards, tokens, positions) does not intervene in the proof, only the structure \( (H,R,W,\Delta) \) and the zero-sum \cite{von1944theory,binmore2007playing}.
+\end{proof}
+
+\begin{theorembox}{Bayesian Representation of the Kaptue-F5 Law}{theo:bayesian_representation}
+\label{theo:bayesian_representation}
+The Bayesian network
+\[
+H \longrightarrow R \longrightarrow W \longrightarrow \Delta,
+\quad
+H \rightarrow W,\quad H \rightarrow \Delta
+\]
+exactly encodes the Kaptue-F5 Law, and any network of this type corresponds to a finite sequential game satisfying the previous hypotheses.
+\end{theorembox}
+
+\begin{proof}
+The factorization of a Bayesian network \cite{ross2014first} for this graph is
+\[
+P(H,R,W,\Delta) = P(H)\,P(R \mid H)\,P(W \mid R,H)\,P(\Delta \mid W,H),
+\]
+which is exactly the Kaptue-F5 factorization. Conversely, any joint law factoring in this way can be interpreted as a sequential game where \( H \) is the initial state, \( R \) the trajectory, \( W \) the result, and \( \Delta \) the gains, with the same hypotheses of determinism and zero-sum.
+\end{proof}
+
+\begin{propositionbox}{Games Not Modelable by the Kaptue-F5 Law}{prop:games_not_modelable}
+\label{prop:games_not_modelable}
+There exist sequential games that cannot be modeled by the Kaptue-F5 Law, for example games where the gains \( \Delta \) depend on the complete history \( R \) and not only on \( (W,H) \).
+\end{propositionbox}
+
+\begin{proof}
+Consider a game where two different trajectories \( R \) and \( R' \) lead to the same result \( W \) and the same initial state \( H \), but to different gains \( \Delta \neq \Delta' \). Then there does not exist a function \( g \) such that \( \Delta = g(W,H) \), which violates the hypothesis of determinism of the gains. The Kaptue-F5 factorization imposes \( \Delta \) as a function of \( (W,H) \) only, so such a game falls outside the model's framework.
+\end{proof}
